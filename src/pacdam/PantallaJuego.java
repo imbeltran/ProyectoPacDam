@@ -36,6 +36,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
                 }
+                repaint();
             }
         });
         timer.start();
@@ -54,6 +55,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                 g.fillRect(j * 50 + getInsets().left, i * 50 + getInsets().top, 50, 50); // Pinta un cuadrado en la posición correspondiente
             }
         }
+
     }
 
 
