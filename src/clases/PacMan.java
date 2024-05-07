@@ -100,6 +100,7 @@ public class PacMan extends javax.swing.JPanel {
             comprobarImagen();    
         }
         System.out.println("Posición de PacMan en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
+        
     }
 
     
