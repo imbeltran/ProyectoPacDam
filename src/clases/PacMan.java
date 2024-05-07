@@ -88,7 +88,7 @@ public class PacMan extends javax.swing.JPanel {
                 nuevaY -= velocidad;
             } else if (abajo && mapas.puedeMoverse(x / 50, (y + velocidad + 49) / 50)) {
                 nuevaY += velocidad;
-            } else if (izquierda && mapas.puedeMoverse((x - velocidad + 49) / 50, y / 50)) {
+            } else if (izquierda && mapas.puedeMoverse((x - velocidad) / 50, y / 50)) {
                 nuevaX -= velocidad;
             } else if (derecha && mapas.puedeMoverse((x + velocidad + 49) / 50, y / 50)) {
                 nuevaX += velocidad;
