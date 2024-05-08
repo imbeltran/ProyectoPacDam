@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import musicas.SClip;
 import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
@@ -19,14 +20,21 @@ public class PacMan extends javax.swing.JPanel {
     private boolean escape = false;
     final int velocidad = 10; 
     private boolean pausado = false;
-    private Image imagenAbierta = new ImageIcon(getClass().getResource("/imagenes/PacDAMA.png")).getImage();
-    private Image imagenCerrada = new ImageIcon(getClass().getResource("/imagenes/PacDAMC.png")).getImage();
-    private Image imagenActual = imagenAbierta;
+    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/PacDAMw.png")).getImage();
+    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/PacDAMww.png")).getImage();
+    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/PacDAMa.png")).getImage();
+    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/PacDAMaa.png")).getImage();
+    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/PacDAMs.png")).getImage();
+    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/PacDAMss.png")).getImage();
+    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/PacDAMd.png")).getImage();
+    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/PacDAMdd.png")).getImage();
+    private Image imagenActual = imagenAbiertaD;
     private boolean bocaAbierta = true;
     private Mapa mapas;
     private int[][] mapa;
     private int puntuacion = 0;
     private PantallaJuego pantallaJuego;
+    private final SClip sonidoMovimiento = new SClip("src/musicas/movimientoPacDam.wav");
 
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
@@ -48,24 +56,32 @@ public class PacMan extends javax.swing.JPanel {
                         abajo = false;
                         izquierda = false;
                         derecha = false;
+                        sonidoMovimiento.stop();
+                        sonidoMovimiento.loop();
                         break;
                     case KeyEvent.VK_A:
                         arriba = false;
                         abajo = false;
                         izquierda = true;
                         derecha = false;
+                        sonidoMovimiento.stop();
+                        sonidoMovimiento.loop();
                         break;
                     case KeyEvent.VK_S:
                         arriba = false;
                         abajo = true;
                         izquierda = false;
                         derecha = false;
+                        sonidoMovimiento.stop();
+                        sonidoMovimiento.loop();
                         break;
                     case KeyEvent.VK_D:
                         arriba = false;
                         abajo = false;
                         izquierda = false;
                         derecha = true;
+                        sonidoMovimiento.stop();
+                        sonidoMovimiento.loop();
                         break;     
                 }
             }
@@ -106,10 +122,29 @@ public class PacMan extends javax.swing.JPanel {
     }
     
     public void comprobarImagen(){
-        if (bocaAbierta) {
-            imagenActual = imagenCerrada;
+        if (bocaAbierta && arriba) {
+            imagenActual = imagenCerradaW;
         } else {
-            imagenActual = imagenAbierta;
+            if (!bocaAbierta && arriba) 
+                imagenActual = imagenAbiertaW;
+        }
+        if (bocaAbierta && abajo) {
+            imagenActual = imagenCerradaS;
+        } else {
+            if (!bocaAbierta && abajo) 
+                imagenActual = imagenAbiertaS;
+        }
+        if (bocaAbierta && derecha) {
+            imagenActual = imagenCerradaD;
+        } else {
+            if (!bocaAbierta && derecha) 
+                imagenActual = imagenAbiertaD;
+        }
+        if (bocaAbierta && izquierda) {
+            imagenActual = imagenCerradaA;
+        } else {
+            if (!bocaAbierta && izquierda) 
+                imagenActual = imagenAbiertaA;
         }
         bocaAbierta = !bocaAbierta;
         repaint();
@@ -140,6 +175,7 @@ public class PacMan extends javax.swing.JPanel {
     }
    
     public void pausarJuego() {
+        sonidoMovimiento.stop();
         PantallaPausa p = new PantallaPausa(this);
         p.setVisible(true);
     } 
