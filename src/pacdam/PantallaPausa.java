@@ -20,6 +20,7 @@ public class PantallaPausa extends javax.swing.JFrame {
         botonContinuar = new javax.swing.JButton();
         botonGuardarPartida = new javax.swing.JButton();
         botonSalir = new javax.swing.JButton();
+        musicaCB = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +47,13 @@ public class PantallaPausa extends javax.swing.JFrame {
             }
         });
 
+        musicaCB.setText("Activar musica");
+        musicaCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                musicaCBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -58,7 +66,9 @@ public class PantallaPausa extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(botonContinuar)
                 .addGap(35, 35, 35)
-                .addComponent(botonGuardarPartida)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(musicaCB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonGuardarPartida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(botonSalir)
                 .addGap(36, 36, 36))
@@ -73,7 +83,9 @@ public class PantallaPausa extends javax.swing.JFrame {
                     .addComponent(botonContinuar)
                     .addComponent(botonGuardarPartida)
                     .addComponent(botonSalir))
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(musicaCB)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,6 +106,10 @@ public class PantallaPausa extends javax.swing.JFrame {
         p.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.dispose();
     }//GEN-LAST:event_botonSalirActionPerformed
+
+    private void musicaCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicaCBActionPerformed
+        
+    }//GEN-LAST:event_musicaCBActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,5 +150,6 @@ public class PantallaPausa extends javax.swing.JFrame {
     private javax.swing.JButton botonGuardarPartida;
     private javax.swing.JButton botonSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JCheckBox musicaCB;
     // End of variables declaration//GEN-END:variables
 }
