@@ -38,12 +38,17 @@ public class PacMan extends javax.swing.JPanel {
     private final SClip sonidoMovimiento = new SClip("src/musicas/movimientoPacDam.wav");
     private boolean[][] visitado;
     private boolean juegoTerminado = false;
+    private boolean musica;
 
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
+        initComponents();
+    }
+    public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, boolean musica) {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
+        this.musica = musica;
         x = 51; y = 51;
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -59,32 +64,45 @@ public class PacMan extends javax.swing.JPanel {
                         abajo = false;
                         izquierda = false;
                         derecha = false;
-                        sonidoMovimiento.stop();
-                        sonidoMovimiento.loop();
+                        if(musica)
+                        {
+                            sonidoMovimiento.stop();
+                            sonidoMovimiento.loop();
+                        }
+                        
                         break;
                     case KeyEvent.VK_A:
                         arriba = false;
                         abajo = false;
                         izquierda = true;
                         derecha = false;
-                        sonidoMovimiento.stop();
-                        sonidoMovimiento.loop();
+                        if(musica)
+                        {
+                            sonidoMovimiento.stop();
+                            sonidoMovimiento.loop();
+                        }
                         break;
                     case KeyEvent.VK_S:
                         arriba = false;
                         abajo = true;
                         izquierda = false;
                         derecha = false;
-                        sonidoMovimiento.stop();
-                        sonidoMovimiento.loop();
+                        if(musica)
+                        {
+                            sonidoMovimiento.stop();
+                            sonidoMovimiento.loop();
+                        }
                         break;
                     case KeyEvent.VK_D:
                         arriba = false;
                         abajo = false;
                         izquierda = false;
                         derecha = true;
-                        sonidoMovimiento.stop();
-                        sonidoMovimiento.loop();
+                        if(musica)
+                        {
+                            sonidoMovimiento.stop();
+                            sonidoMovimiento.loop();
+                        }
                         break;     
                 }
             }
@@ -198,7 +216,7 @@ public class PacMan extends javax.swing.JPanel {
    
     public void pausarJuego() {
         sonidoMovimiento.stop();
-        PantallaPausa p = new PantallaPausa(this);
+        PantallaPausa p = new PantallaPausa(this, musica);
         p.setVisible(true);
     } 
     
@@ -218,6 +236,16 @@ public class PacMan extends javax.swing.JPanel {
             }
         }
     }
+
+    public boolean isMusica() {
+        return musica;
+    }
+
+    public void setMusica(boolean musica) {
+        this.musica = musica;
+    }
+        
+    
     
     
     @SuppressWarnings("unchecked")
