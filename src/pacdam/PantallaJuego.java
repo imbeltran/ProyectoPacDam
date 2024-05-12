@@ -29,12 +29,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
-        
-        puntuacionLabel = new JLabel("Puntuación: " + panelPacMan.getPuntuacion());
-        puntuacionLabel.setBounds(this.getWidth() - 110, 10, 100, 20);
-        puntuacionLabel.setForeground(Color.WHITE);
-        this.add(puntuacionLabel);
-        
+                
         initComponents();    
         movimientoPacMan();
     }
@@ -46,7 +41,6 @@ public class PantallaJuego extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
-                    puntuacionLabel.setText("Puntuación: " + panelPacMan.getPuntuacion());
                 }
             }
         });

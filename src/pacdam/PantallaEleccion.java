@@ -6,12 +6,25 @@ import javax.swing.JFrame;
 public class PantallaEleccion extends javax.swing.JFrame {
 
     private Mapa mapa;
+    private static PantallaEleccion instancia;
     
     public PantallaEleccion() {
         this.mapa = new Mapa();
+
         initComponents();
     }
-
+    
+    public static PantallaEleccion getInstancia() {
+        if (instancia == null) {
+            instancia = new PantallaEleccion();
+        }
+        return instancia;
+    }
+    
+    public void cerrar() {
+        this.dispose();
+        instancia = null;
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -122,7 +135,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        pantallaJuego.setVisible(true);        
+        pantallaJuego.setVisible(true); 
+        PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel1ActionPerformed
 
     private void botonNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel2ActionPerformed
@@ -131,6 +145,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pantallaJuego.setVisible(true);
+        PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel2ActionPerformed
 
     private void botonNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel3ActionPerformed
@@ -139,6 +154,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pantallaJuego.setVisible(true);
+        PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel3ActionPerformed
 
 

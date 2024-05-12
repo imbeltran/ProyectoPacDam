@@ -6,6 +6,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import musicas.SClip;
+import pacdam.PantallaEleccion;
 import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
@@ -35,6 +36,8 @@ public class PacMan extends javax.swing.JPanel {
     private int puntuacion = 0;
     private PantallaJuego pantallaJuego;
     private final SClip sonidoMovimiento = new SClip("src/musicas/movimientoPacDam.wav");
+    private boolean[][] visitado;
+    private boolean juegoTerminado = false;
 
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
@@ -86,8 +89,15 @@ public class PacMan extends javax.swing.JPanel {
                 }
             }
         });
+        visitado = new boolean[mapa.length][mapa[0].length];
+        for (int i = 0; i < mapa.length; i++) {
+            for (int j = 0; j < mapa[i].length; j++) {
+                visitado[i][j] = false;
+            }
+        }
         this.setFocusable(true);  
         initComponents();
+
     }
     
     @Override
@@ -114,11 +124,23 @@ public class PacMan extends javax.swing.JPanel {
             }
             x = nuevaX;
             y = nuevaY;
-
             this.setBounds(x , y , this.getWidth(), this.getHeight());
+            
+            int matrizX = x / 50;
+            int matrizY = y / 50;
+            if (!visitado[matrizX][matrizY]) {
+                visitado[matrizX][matrizY] = true;
+                sumarPuntuacion();
+            }
+            if (puntuacion == mapas.getPuntuacionTotal()) {
+                System.out.println("¡Felicidades! Te has pasado el nivel.");
+                pantallaJuego.dispose();
+                PantallaEleccion.getInstancia().setVisible(true);
+            }
             comprobarImagen();
         }
         System.out.println("Posicion de PacMan en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
+        System.out.println("Puntuacion: "+puntuacion);
     }
     
     public void comprobarImagen(){
@@ -180,6 +202,22 @@ public class PacMan extends javax.swing.JPanel {
         p.setVisible(true);
     } 
     
+    public void sumarPuntuacion() {
+        puntuacion = puntuacion +1;
+    }
+    
+        public void reiniciar() {
+        x = 0;
+        y = 0;
+
+        puntuacion = 0;
+
+        for (int i = 0; i < visitado.length; i++) {
+            for (int j = 0; j < visitado[i].length; j++) {
+                visitado[i][j] = false;
+            }
+        }
+    }
     
     
     @SuppressWarnings("unchecked")
