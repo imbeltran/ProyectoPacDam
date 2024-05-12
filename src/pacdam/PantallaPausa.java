@@ -6,10 +6,20 @@ import javax.swing.JFrame;
 public class PantallaPausa extends javax.swing.JFrame {
     
     private PacMan pacman;
+    private boolean musica;
     
     public PantallaPausa(PacMan pacman) {
         this.pacman = pacman;
         initComponents();
+    }
+    public PantallaPausa(PacMan pacman, boolean musica) {
+        this.pacman = pacman;
+        this.musica = musica;
+        initComponents();
+        if(musica)
+        {
+            musicaCB.setSelected(true);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -93,6 +103,7 @@ public class PantallaPausa extends javax.swing.JFrame {
 
     private void botonContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarActionPerformed
         pacman.setPausado(false);
+        pacman.setMusica(musicaCB.isSelected());
         this.dispose(); 
     }//GEN-LAST:event_botonContinuarActionPerformed
 

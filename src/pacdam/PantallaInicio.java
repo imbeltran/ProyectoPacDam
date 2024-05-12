@@ -17,7 +17,7 @@ public class PantallaInicio extends javax.swing.JFrame {
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 dispose();
-                PantallaMenu pantallaMenu = new PantallaMenu();
+                PantallaMenu pantallaMenu = new PantallaMenu(musica);
                 pantallaMenu.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 pantallaMenu.setVisible(true);
                 musicaInicio.stop();

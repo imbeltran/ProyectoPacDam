@@ -7,12 +7,19 @@ public class PantallaEleccion extends javax.swing.JFrame {
 
     private Mapa mapa;
     private static PantallaEleccion instancia;
+    private boolean musica;
     
     public PantallaEleccion() {
         this.mapa = new Mapa();
 
         initComponents();
     }
+    public PantallaEleccion(boolean musica) {
+        this.mapa = new Mapa();
+        this.musica = musica;
+        initComponents();
+    }
+    
     
     public static PantallaEleccion getInstancia() {
         if (instancia == null) {
@@ -133,7 +140,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel1ActionPerformed
         mapa.setIndiceMapaActual(0); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pantallaJuego.setVisible(true); 
         PantallaEleccion.getInstancia().cerrar();
@@ -142,7 +149,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel2ActionPerformed
         mapa.setIndiceMapaActual(1); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();
@@ -151,7 +158,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel3ActionPerformed
         mapa.setIndiceMapaActual(2); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();

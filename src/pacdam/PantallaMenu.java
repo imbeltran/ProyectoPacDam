@@ -14,10 +14,19 @@ import musicas.SClip;
  */
 public class PantallaMenu extends javax.swing.JFrame {
     private final SClip musicaMenu = new SClip("src/musicas/pacman.wav");
+    private boolean musica;
     
     public PantallaMenu() {
        musicaMenu.loop();
         initComponents();
+    }
+    public PantallaMenu(boolean musica) {
+        initComponents();
+        this.musica = musica;
+        if (musica)
+        {
+            musicaMenu.loop();
+        }
     }
 
     /**
@@ -35,8 +44,10 @@ public class PantallaMenu extends javax.swing.JFrame {
         botonCargarPartida = new javax.swing.JButton();
         botonNuevaPartida = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        skins = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
 
         botonSalirDelJuego.setText("Salir del juego");
         botonSalirDelJuego.addActionListener(new java.awt.event.ActionListener() {
@@ -93,7 +104,11 @@ public class PantallaMenu extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(skins, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -103,7 +118,9 @@ public class PantallaMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(260, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
+                .addComponent(skins, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,7 +144,7 @@ public class PantallaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartidaActionPerformed
-        PantallaEleccion p = new PantallaEleccion();
+        PantallaEleccion p = new PantallaEleccion(musica);
         p.setVisible(true);
         p.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.dispose();
@@ -187,5 +204,6 @@ public class PantallaMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton skins;
     // End of variables declaration//GEN-END:variables
 }

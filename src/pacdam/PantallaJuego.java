@@ -20,13 +20,24 @@ public class PantallaJuego extends javax.swing.JFrame {
     private Mapa mapa;
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
-    
+    private boolean musica;
 
 
     public PantallaJuego(Mapa mapa) {
         this.mapa = mapa;
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
         panelPacMan = new PacMan(datosMapa, mapa, this);
+        this.add(panelPacMan);
+        panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
+                
+        initComponents();    
+        movimientoPacMan();
+    }
+    public PantallaJuego(Mapa mapa, boolean musica) {
+        this.mapa = mapa;
+        this.musica = musica;
+        datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
                 
@@ -65,6 +76,8 @@ public class PantallaJuego extends javax.swing.JFrame {
             }
         }      
     }
+    
+
     
 
     @SuppressWarnings("unchecked")
