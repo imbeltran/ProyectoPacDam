@@ -69,7 +69,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         int nuevaX = x;
         int nuevaY = y;
         if (!pausado) {
-            do
+            if(!mapas.puedeMoverse(x, y))
             {
                 randomizer = (int)Math.floor(Math.random()*5+1);
                 switch (randomizer) {
@@ -137,7 +137,6 @@ public class FantasmaNaranja extends javax.swing.JPanel {
                 this.setBounds(x , y , this.getWidth(), this.getHeight());
                 comprobarImagen();
             }
-            while(mapas.puedeMoverse(x, y));
         }
         System.out.println("Posicion de Fantasma Naranja en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
     }
