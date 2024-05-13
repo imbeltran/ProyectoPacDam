@@ -1,5 +1,6 @@
 package pacdam;
 
+import clases.FantasmaNaranja;
 import clases.Mapa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 
 public class PantallaJuego extends javax.swing.JFrame { 
     PacMan panelPacMan;
+    FantasmaNaranja panelFantasmaNaranja;
     private Timer timer;
     private Mapa mapa;
     public int[][] datosMapa;
@@ -37,6 +39,10 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
+        
+        panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja);
+        panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
                 
         initComponents();
         movimientoPacMan();
@@ -51,21 +57,38 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
         crearMapa();
         
+        
+        panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja);
+        panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
+                
         initComponents();    
         movimientoPacMan();
     }
     
     public void movimientoPacMan(){
-        Timer timer = new Timer(100, new ActionListener() {
+        timer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
+                    panelFantasmaNaranja.mover();
                 }
             }
         });
         timer.start();
     }
+    /*public void movimientoFantasmaNaranja(){
+        timer2 = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelPacMan.getPausado()) {
+                    
+                }
+            }
+        });
+        timer2.start();
+    }*/
     
     /*@Override
     public void paint(Graphics g) {

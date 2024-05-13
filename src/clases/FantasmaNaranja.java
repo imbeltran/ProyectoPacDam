@@ -21,12 +21,12 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     private boolean escape = false;
     final int velocidad = 10; 
     private boolean pausado = false;
-    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaA.png")).getImage();
-    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaAA.png")).getImage();
-    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaS.png")).getImage();
-    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaSS.png")).getImage();
-    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaW.png")).getImage();
-    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaWW.png")).getImage();
+    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaW.png")).getImage();
+    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaWW.png")).getImage();
+    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaA.png")).getImage();
+    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaAA.png")).getImage();
+    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaS.png")).getImage();
+    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaSS.png")).getImage();
     private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjad.png")).getImage();
     private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjadd.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
@@ -35,9 +35,9 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     private int[][] mapa;
     private int puntuacion = 0;
     private PantallaJuego pantallaJuego;
-    private final SClip sonidoMovimiento = new SClip("src/musicas/movimientoPacDam.wav");
-    private boolean[][] visitado;
+    private boolean[][] visitado2;
     private boolean juegoTerminado = false;
+    private int randomizer;
 
 
 
@@ -45,47 +45,13 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
-        x = 51; y = 51;
-        this.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ESCAPE:
-                        pausado = !pausado;
-                        if (pausado) {
-                            pausarJuego();
-                        }
-                        break;
-                    case KeyEvent.VK_W:
-                        arriba = true;
-                        abajo = false;
-                        izquierda = false;
-                        derecha = false;
-                        break;
-                    case KeyEvent.VK_A:
-                        arriba = false;
-                        abajo = false;
-                        izquierda = true;
-                        derecha = false;
-                        break;
-                    case KeyEvent.VK_S:
-                        arriba = false;
-                        abajo = true;
-                        izquierda = false;
-                        derecha = false;
-                        break;
-                    case KeyEvent.VK_D:
-                        arriba = false;
-                        abajo = false;
-                        izquierda = false;
-                        derecha = true;
-                        break;     
-                }
-            }
-        });
-        visitado = new boolean[mapa.length][mapa[0].length];
+        x = 1001; y = 51;
+        
+      
+        visitado2 = new boolean[mapa.length][mapa[0].length];
         for (int i = 0; i < mapa.length; i++) {
             for (int j = 0; j < mapa[i].length; j++) {
-                visitado[i][j] = false;
+                visitado2[i][j] = false;
             }
         }
         this.setFocusable(true);  
@@ -102,38 +68,77 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     public void mover() {
         int nuevaX = x;
         int nuevaY = y;
-        if (escape && !pausado) {
-            pausarJuego();
-        }
         if (!pausado) {
-            if (arriba && mapas.puedeMoverse(x / 50, (y - velocidad) / 50) && mapas.puedeMoverse((x + 47) / 50, (y - velocidad) / 50)) {
-                nuevaY -= velocidad;
-            } else if (abajo && mapas.puedeMoverse(x / 50, (y + velocidad + 47) / 50) && mapas.puedeMoverse((x + 47) / 50, (y + velocidad + 47) / 50)) {
-                nuevaY += velocidad;
-            } else if (izquierda && mapas.puedeMoverse((x - velocidad) / 50, y / 50) && mapas.puedeMoverse((x - velocidad) / 50, (y + 47) / 50)) {
-                nuevaX -= velocidad;
-            } else if (derecha && mapas.puedeMoverse((x + velocidad + 47) / 50, y / 50) && mapas.puedeMoverse((x + velocidad + 47) / 50, (y + 47) / 50)) {
-                nuevaX += velocidad;
+            if(!mapas.puedeMoverse(x, y))
+            {
+                randomizer = (int)Math.floor(Math.random()*5+1);
+                switch (randomizer) {
+                    case 1:
+                        if(randomizer!=1)
+                        {
+                            arriba = true;
+                            abajo = false;
+                            izquierda = false;
+                            derecha = false;
+                            break;
+                        }else
+                        {
+                            break;
+                        }
+                        
+                    case 2:
+                        if(randomizer!=1)
+                        {
+                            arriba = false;
+                            abajo = false;
+                            izquierda = true;
+                            derecha = false;
+                            break;
+                        }else
+                        {
+                            break;
+                        }
+                    case 3:
+                        if(randomizer!=1)
+                        {
+                            arriba = false;
+                            abajo = true;
+                            izquierda = false;
+                            derecha = false;
+                            break;
+                        }else
+                        {
+                            break;
+                        }
+                    case 4:
+                        if(randomizer!=1)
+                        {
+                            arriba = false;
+                            abajo = false;
+                            izquierda = false;
+                            derecha = true;
+                            break;     
+                        }else
+                        {
+                            break;
+                        }
+                }
+                if (arriba && mapas.puedeMoverse(x / 50, (y - velocidad) / 50) && mapas.puedeMoverse((x + 47) / 50, (y - velocidad) / 50)) {
+                    nuevaY -= velocidad;
+                } else if (abajo && mapas.puedeMoverse(x / 50, (y + velocidad + 47) / 50) && mapas.puedeMoverse((x + 47) / 50, (y + velocidad + 47) / 50)) {
+                    nuevaY += velocidad;
+                } else if (izquierda && mapas.puedeMoverse((x - velocidad) / 50, y / 50) && mapas.puedeMoverse((x - velocidad) / 50, (y + 47) / 50)) {
+                    nuevaX -= velocidad;
+                } else if (derecha && mapas.puedeMoverse((x + velocidad + 47) / 50, y / 50) && mapas.puedeMoverse((x + velocidad + 47) / 50, (y + 47) / 50)) {
+                    nuevaX += velocidad;
+                }
+                x = nuevaX;
+                y = nuevaY;
+                this.setBounds(x , y , this.getWidth(), this.getHeight());
+                comprobarImagen();
             }
-            x = nuevaX;
-            y = nuevaY;
-            this.setBounds(x , y , this.getWidth(), this.getHeight());
-            
-            int matrizX = x / 50;
-            int matrizY = y / 50;
-            if (!visitado[matrizX][matrizY]) {
-                visitado[matrizX][matrizY] = true;
-                sumarPuntuacion();
-            }
-            if (puntuacion == mapas.getPuntuacionTotal()) {
-                System.out.println("¡Felicidades! Te has pasado el nivel.");
-                pantallaJuego.dispose();
-                PantallaEleccion.getInstancia().setVisible(true);
-            }
-            comprobarImagen();
         }
-        System.out.println("Posicion de PacMan en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
-        System.out.println("Puntuacion: "+puntuacion);
+        System.out.println("Posicion de Fantasma Naranja en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
     }
     
     public void comprobarImagen(){
@@ -173,43 +178,23 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         return y;
     }
     
-    public void setPausado(boolean pausado) {
-        this.pausado = pausado;
-    }
+    /*public void pausarJuego() {
+        PantallaPausa p = new PantallaPausa(this);
+        p.setVisible(true);
+    } */
     
-    public boolean getPausado() {
-        return this.pausado;
-    }
-
-    public int getPuntuacion() {
-        return this.puntuacion;
-    }
-
-    public void setPuntuacion(int puntuacion) {
-        this.puntuacion = puntuacion;
-    }
-   
-    public void pausarJuego() {
-        sonidoMovimiento.stop();
-        //PantallaPausa p = new PantallaPausa(this, musica);
-        //p.setVisible(true);
-    } 
     
-    public void sumarPuntuacion() {
-        puntuacion = puntuacion +1;
-    }
-    
-        public void reiniciar() {
-        x = 0;
-        y = 0;
+    public void reiniciar() {
+    x = 0;
+    y = 0;
 
-        puntuacion = 0;
+    puntuacion = 0;
 
-        for (int i = 0; i < visitado.length; i++) {
-            for (int j = 0; j < visitado[i].length; j++) {
-                visitado[i][j] = false;
-            }
+    for (int i = 0; i < visitado2.length; i++) {
+        for (int j = 0; j < visitado2[i].length; j++) {
+            visitado2[i][j] = false;
         }
+    }
     }
 
         
