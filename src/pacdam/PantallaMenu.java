@@ -20,6 +20,7 @@ public class PantallaMenu extends javax.swing.JFrame {
        musicaMenu.loop();
         initComponents();
     }
+    
     public PantallaMenu(boolean musica) {
         initComponents();
         this.musica = musica;

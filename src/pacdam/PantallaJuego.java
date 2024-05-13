@@ -9,8 +9,13 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import clases.PacMan;
 import java.awt.Color;
+import static java.awt.Color.RED;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,6 +26,9 @@ public class PantallaJuego extends javax.swing.JFrame {
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
     private boolean musica;
+    private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/cerveza.png")).getImage();
+    private JPanel[][] panelesMapa;
+
 
 
     public PantallaJuego(Mapa mapa) {
@@ -30,9 +38,10 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
                 
-        initComponents();    
+        initComponents();
         movimientoPacMan();
     }
+    
     public PantallaJuego(Mapa mapa, boolean musica) {
         this.mapa = mapa;
         this.musica = musica;
@@ -40,11 +49,11 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
-                
+        crearMapa();
+        
         initComponents();    
         movimientoPacMan();
     }
-
     
     public void movimientoPacMan(){
         Timer timer = new Timer(100, new ActionListener() {
@@ -58,25 +67,67 @@ public class PantallaJuego extends javax.swing.JFrame {
         timer.start();
     }
     
-
-    @Override
+    /*@Override
     public void paint(Graphics g) {
         super.paint(g);
         for (int i = 0; i < datosMapa.length; i++) {
             for (int j = 0; j < datosMapa[i].length; j++) {
+                if (i == 0 && j < 3) {
+                    continue;
+                }
                 if (datosMapa[i][j] == 1) {
                     g.setColor(Color.BLACK);
                     g.fillRect(j * 50 + getInsets().left, i * 50 + getInsets().top, 50, 50);
                 } else {
-                    g.setColor(new Color(238, 238, 238));
+                    g.setColor(new Color(0, 0, 153));
                     g.fillRect(j * 50 + getInsets().left, i * 50 + getInsets().top, 50, 50);
                     g.setColor(Color.RED);
                     g.fillOval(j * 50 + getInsets().left + 20, i * 50 + getInsets().top + 20, 10, 10);
                 }
             }
         }      
+    }*/
+    
+    public void crearMapa() {
+        this.setLayout(null); // No usamos un layout manager
+        panelesMapa = new JPanel[datosMapa.length][datosMapa[0].length];
+        for (int i = 0; i < datosMapa.length; i++) {
+            for (int j = 0; j < datosMapa[i].length; j++) {
+                JPanel panel = new JPanel();
+                panel.setLayout(null);
+                if (i == 0 && j < 3) {
+                    continue;
+                }
+                if (datosMapa[i][j] == 1) {
+                    panel.setBackground(Color.BLACK);
+                } else {
+                    panel.setBackground(new Color(0, 0, 153));
+                    JPanel cerveza = new JPanel();
+                    cerveza.setBackground(RED);
+                    cerveza.setBounds(20, 20, 10, 10);
+                    panel.add(cerveza);
+                }
+                panel.setBounds(j * 50, i * 50, 50, 50); // Establecemos la posición y el tamaño del panel
+                this.add(panel);
+                panelesMapa[i][j] = panel; // Almacenamos el panel en la matriz
+            }
+        }
+        this.revalidate(); // Para asegurar que los cambios en el layout se apliquen
+    }
+  
+    public void actualizarPuntuacion(int puntuacion){
+        labelPuntuacion.setText("Puntuacion: " + puntuacion);      
     }
     
+    public void pacmanPasaPor(int i, int j) {
+        JPanel panel = panelesMapa[i][j];
+        if (datosMapa[i][j] != 1) { // Si la casilla no es un muro
+            panel.removeAll(); // Elimina la cerveza
+            panel.setBackground(new Color(0, 0, 153)); // Repinta el panel
+            panel.revalidate();
+            panel.repaint();
+        }
+    }
 
     
 
@@ -85,19 +136,49 @@ public class PantallaJuego extends javax.swing.JFrame {
     private void initComponents() {
 
         mapaPanel = new javax.swing.JPanel();
+        panelPuntuacion = new javax.swing.JPanel();
+        labelPuntuacion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+
+        mapaPanel.setBackground(new java.awt.Color(0, 0, 153));
+
+        panelPuntuacion.setBackground(new java.awt.Color(0, 0, 0));
+
+        labelPuntuacion.setForeground(new java.awt.Color(255, 255, 0));
+        labelPuntuacion.setText("Puntuación: ");
+
+        javax.swing.GroupLayout panelPuntuacionLayout = new javax.swing.GroupLayout(panelPuntuacion);
+        panelPuntuacion.setLayout(panelPuntuacionLayout);
+        panelPuntuacionLayout.setHorizontalGroup(
+            panelPuntuacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPuntuacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+        panelPuntuacionLayout.setVerticalGroup(
+            panelPuntuacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPuntuacionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelPuntuacion)
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout mapaPanelLayout = new javax.swing.GroupLayout(mapaPanel);
         mapaPanel.setLayout(mapaPanelLayout);
         mapaPanelLayout.setHorizontalGroup(
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGroup(mapaPanelLayout.createSequentialGroup()
+                .addComponent(panelPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 404, Short.MAX_VALUE))
         );
         mapaPanelLayout.setVerticalGroup(
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 349, Short.MAX_VALUE)
+            .addGroup(mapaPanelLayout.createSequentialGroup()
+                .addComponent(panelPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -125,6 +206,8 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel labelPuntuacion;
     private javax.swing.JPanel mapaPanel;
+    private javax.swing.JPanel panelPuntuacion;
     // End of variables declaration//GEN-END:variables
 }

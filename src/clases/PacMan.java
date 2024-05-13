@@ -44,6 +44,7 @@ public class PacMan extends javax.swing.JPanel {
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         initComponents();
     }
+    
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, boolean musica) {
         this.mapas = mapas;
         this.mapa = mapa;
@@ -143,12 +144,16 @@ public class PacMan extends javax.swing.JPanel {
             x = nuevaX;
             y = nuevaY;
             this.setBounds(x , y , this.getWidth(), this.getHeight());
-            
+
             int matrizX = x / 50;
             int matrizY = y / 50;
-            if (!visitado[matrizX][matrizY]) {
-                visitado[matrizX][matrizY] = true;
-                sumarPuntuacion();
+            if (matrizX >= 0 && matrizX < visitado[0].length && matrizY >= 0 && matrizY < visitado.length) {
+                if (!visitado[matrizY][matrizX]) {
+                    visitado[matrizY][matrizX] = true;
+                    sumarPuntuacion();
+                    // Llama a pacmanPasaPor cuando Pacman visita una nueva casilla
+                    pantallaJuego.pacmanPasaPor(matrizY, matrizX);
+                }
             }
             if (puntuacion == mapas.getPuntuacionTotal()) {
                 System.out.println("¡Felicidades! Te has pasado el nivel.");
@@ -160,6 +165,7 @@ public class PacMan extends javax.swing.JPanel {
         System.out.println("Posicion de PacMan en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
         System.out.println("Puntuacion: "+puntuacion);
     }
+
     
     public void comprobarImagen(){
         if (bocaAbierta && arriba) {
@@ -213,6 +219,11 @@ public class PacMan extends javax.swing.JPanel {
     public void setPuntuacion(int puntuacion) {
         this.puntuacion = puntuacion;
     }
+    
+    public void sumarPuntuacion() {
+        puntuacion = puntuacion +1;
+        pantallaJuego.actualizarPuntuacion(puntuacion);
+    }
    
     public void pausarJuego() {
         sonidoMovimiento.stop();
@@ -220,12 +231,8 @@ public class PacMan extends javax.swing.JPanel {
         p.setVisible(true);
     } 
     
-    public void sumarPuntuacion() {
-        puntuacion = puntuacion +1;
-        //pantallaJuego.actualizarPuntuacion(puntuacion);
-    }
     
-        public void reiniciar() {
+    public void reiniciar() {
         x = 0;
         y = 0;
 
