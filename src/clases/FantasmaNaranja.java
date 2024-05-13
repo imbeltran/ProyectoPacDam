@@ -11,7 +11,7 @@ import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
 
-public class PacMan extends javax.swing.JPanel {
+public class FantasmaNaranja extends javax.swing.JPanel {
     private int x = 0;
     private int y = 0;
     private boolean arriba = false;
@@ -21,14 +21,14 @@ public class PacMan extends javax.swing.JPanel {
     private boolean escape = false;
     final int velocidad = 10; 
     private boolean pausado = false;
-    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMw.png")).getImage();
-    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMww.png")).getImage();
-    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMa.png")).getImage();
-    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMaa.png")).getImage();
-    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMs.png")).getImage();
-    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMss.png")).getImage();
-    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMd.png")).getImage();
-    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMdd.png")).getImage();
+    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaA.png")).getImage();
+    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaAA.png")).getImage();
+    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaS.png")).getImage();
+    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaSS.png")).getImage();
+    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaW.png")).getImage();
+    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaWW.png")).getImage();
+    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjad.png")).getImage();
+    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjadd.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
     private boolean bocaAbierta = true;
     private Mapa mapas;
@@ -38,17 +38,13 @@ public class PacMan extends javax.swing.JPanel {
     private final SClip sonidoMovimiento = new SClip("src/musicas/movimientoPacDam.wav");
     private boolean[][] visitado;
     private boolean juegoTerminado = false;
-    private boolean musica;
 
 
-    public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
-        initComponents();
-    }
-    public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, boolean musica) {
+
+    public FantasmaNaranja(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
-        this.musica = musica;
         x = 51; y = 51;
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -64,45 +60,24 @@ public class PacMan extends javax.swing.JPanel {
                         abajo = false;
                         izquierda = false;
                         derecha = false;
-                        if(musica)
-                        {
-                            sonidoMovimiento.stop();
-                            sonidoMovimiento.loop();
-                        }
-                        
                         break;
                     case KeyEvent.VK_A:
                         arriba = false;
                         abajo = false;
                         izquierda = true;
                         derecha = false;
-                        if(musica)
-                        {
-                            sonidoMovimiento.stop();
-                            sonidoMovimiento.loop();
-                        }
                         break;
                     case KeyEvent.VK_S:
                         arriba = false;
                         abajo = true;
                         izquierda = false;
                         derecha = false;
-                        if(musica)
-                        {
-                            sonidoMovimiento.stop();
-                            sonidoMovimiento.loop();
-                        }
                         break;
                     case KeyEvent.VK_D:
                         arriba = false;
                         abajo = false;
                         izquierda = false;
                         derecha = true;
-                        if(musica)
-                        {
-                            sonidoMovimiento.stop();
-                            sonidoMovimiento.loop();
-                        }
                         break;     
                 }
             }
@@ -216,8 +191,8 @@ public class PacMan extends javax.swing.JPanel {
    
     public void pausarJuego() {
         sonidoMovimiento.stop();
-        PantallaPausa p = new PantallaPausa(this, musica);
-        p.setVisible(true);
+        //PantallaPausa p = new PantallaPausa(this, musica);
+        //p.setVisible(true);
     } 
     
     public void sumarPuntuacion() {
@@ -237,13 +212,6 @@ public class PacMan extends javax.swing.JPanel {
         }
     }
 
-    public boolean isMusica() {
-        return musica;
-    }
-
-    public void setMusica(boolean musica) {
-        this.musica = musica;
-    }
         
     
     
