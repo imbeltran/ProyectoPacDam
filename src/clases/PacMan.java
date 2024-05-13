@@ -222,6 +222,7 @@ public class PacMan extends javax.swing.JPanel {
     
     public void sumarPuntuacion() {
         puntuacion = puntuacion +1;
+        //pantallaJuego.actualizarPuntuacion(puntuacion);
     }
     
         public void reiniciar() {
@@ -252,7 +253,7 @@ public class PacMan extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(238, 238, 238));
+        setBackground(new java.awt.Color(0, 0, 153));
         setMaximumSize(new java.awt.Dimension(48, 48));
         setPreferredSize(new java.awt.Dimension(48, 48));
 
