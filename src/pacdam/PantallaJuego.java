@@ -25,6 +25,8 @@ public class PantallaJuego extends javax.swing.JFrame {
     PacMan panelPacMan;
     FantasmaNaranja panelFantasmaNaranja;
     FantasmaNaranja panelFantasmaNaranja1;
+    FantasmaNaranja panelFantasmaNaranja2;
+    FantasmaNaranja panelFantasmaNaranja3;
     private Timer timer;
     private Mapa mapa;
     public int[][] datosMapa;
@@ -69,6 +71,14 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.add(panelFantasmaNaranja1);
         panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
         
+        panelFantasmaNaranja2 = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja2);
+        panelFantasmaNaranja2.setBounds(panelFantasmaNaranja2.getPosX(), panelFantasmaNaranja2.getPosY(), 48, 48);
+        
+        panelFantasmaNaranja3 = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja3);
+        panelFantasmaNaranja3.setBounds(panelFantasmaNaranja3.getPosX(), panelFantasmaNaranja3.getPosY(), 48, 48);
+        
         crearMapa();          
         initComponents();    
         movimientoPacMan();
@@ -102,6 +112,8 @@ public class PantallaJuego extends javax.swing.JFrame {
                 if (!panelPacMan.getPausado()) {
                     panelFantasmaNaranja.mover();
                     panelFantasmaNaranja1.mover();
+                    panelFantasmaNaranja2.mover();
+                    panelFantasmaNaranja3.mover();
                 }
             }
         });
