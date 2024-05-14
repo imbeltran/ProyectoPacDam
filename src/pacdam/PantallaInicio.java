@@ -20,7 +20,8 @@ public class PantallaInicio extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 dispose();
                 PantallaMenu pantallaMenu = new PantallaMenu(musica);
-                pantallaMenu.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                pantallaMenu.setSize(1500, 750); // Establece las dimensiones deseadas
+                pantallaMenu.setLocationRelativeTo(null);
                 pantallaMenu.setVisible(true);
                 musicaInicio.stop();
             }

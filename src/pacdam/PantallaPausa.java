@@ -7,14 +7,17 @@ public class PantallaPausa extends javax.swing.JFrame {
     
     private PacMan pacman;
     private boolean musica;
+    private PantallaJuego pantallaJuego;
     
-    public PantallaPausa(PacMan pacman) {
+    public PantallaPausa(PacMan pacman, PantallaJuego pantallaJuego) {
         this.pacman = pacman;
+        this.pantallaJuego=pantallaJuego;
         initComponents();
     }
-    public PantallaPausa(PacMan pacman, boolean musica) {
+    public PantallaPausa(PacMan pacman, boolean musica, PantallaJuego pantallaJuego) {
         this.pacman = pacman;
         this.musica = musica;
+        this.pantallaJuego=pantallaJuego;
         initComponents();
         if(musica)
         {
@@ -112,10 +115,14 @@ public class PantallaPausa extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGuardarPartidaActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
-        PantallaInicio p = new PantallaInicio();
-        p.setVisible(true);
-        p.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pacman.detenerTimer();
+        pantallaJuego.borrarPaneles();
+        pantallaJuego.cerrarVentana();
         this.dispose();
+        PantallaMenu p = new PantallaMenu();
+        p.setSize(1500, 750);
+        p.setLocationRelativeTo(null);
+        p.setVisible(true);
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void musicaCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicaCBActionPerformed

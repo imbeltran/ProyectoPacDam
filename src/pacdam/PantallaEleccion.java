@@ -141,7 +141,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
         mapa.setIndiceMapaActual(0); 
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true); 
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel1ActionPerformed
@@ -150,7 +151,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
         mapa.setIndiceMapaActual(1); 
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel2ActionPerformed
@@ -159,7 +161,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
         mapa.setIndiceMapaActual(2); 
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel3ActionPerformed

@@ -19,10 +19,12 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class PantallaJuego extends javax.swing.JFrame { 
     PacMan panelPacMan;
     FantasmaNaranja panelFantasmaNaranja;
+    FantasmaNaranja panelFantasmaNaranja1;
     private Timer timer;
     private Mapa mapa;
     public int[][] datosMapa;
@@ -30,8 +32,6 @@ public class PantallaJuego extends javax.swing.JFrame {
     private boolean musica;
     private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/cerveza.png")).getImage();
     private JPanel[][] panelesMapa;
-
-
 
     public PantallaJuego(Mapa mapa) {
         this.mapa = mapa;
@@ -43,7 +43,12 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
-                
+        
+        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja1);
+        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
+        
+        crearMapa();
         initComponents();
         movimientoPacMan();
     }
@@ -55,61 +60,53 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
-        crearMapa();
-        
         
         panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
-                
+        
+        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
+        this.add(panelFantasmaNaranja1);
+        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
+        
+        crearMapa();          
         initComponents();    
         movimientoPacMan();
+        movimientoFantasmaNaranja();
     }
     
     public void movimientoPacMan(){
-        timer = new Timer(100, new ActionListener() {
+        timer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
-                    panelFantasmaNaranja.mover();
+                    if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)) {
+                    // Pausa el juego
+                    panelPacMan.setPausado(true);
+
+                    // Abre la pantalla de fin de juego
+                    PantallaFin pantallaFin = new PantallaFin();
+                    pantallaFin.setVisible(true);
+                }
                 }
             }
         });
         timer.start();
     }
-    /*public void movimientoFantasmaNaranja(){
-        timer2 = new Timer(100, new ActionListener() {
+    
+    public void movimientoFantasmaNaranja(){
+        timer = new Timer(400, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
-                    
+                    panelFantasmaNaranja.mover();
+                    panelFantasmaNaranja1.mover();
                 }
             }
         });
-        timer2.start();
-    }*/
-    
-    /*@Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        for (int i = 0; i < datosMapa.length; i++) {
-            for (int j = 0; j < datosMapa[i].length; j++) {
-                if (i == 0 && j < 3) {
-                    continue;
-                }
-                if (datosMapa[i][j] == 1) {
-                    g.setColor(Color.BLACK);
-                    g.fillRect(j * 50 + getInsets().left, i * 50 + getInsets().top, 50, 50);
-                } else {
-                    g.setColor(new Color(0, 0, 153));
-                    g.fillRect(j * 50 + getInsets().left, i * 50 + getInsets().top, 50, 50);
-                    g.setColor(Color.RED);
-                    g.fillOval(j * 50 + getInsets().left + 20, i * 50 + getInsets().top + 20, 10, 10);
-                }
-            }
-        }      
-    }*/
+        timer.start();
+    }
     
     public void crearMapa() {
         this.setLayout(null); // No usamos un layout manager
@@ -151,6 +148,24 @@ public class PantallaJuego extends javax.swing.JFrame {
             panel.repaint();
         }
     }
+    
+    public void borrarPaneles() {
+        this.getContentPane().remove(panelPacMan);
+        this.getContentPane().remove(panelFantasmaNaranja);
+        this.getContentPane().remove(panelFantasmaNaranja1);
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+    }
+    
+    public void detenerTimers() {
+        panelPacMan.detenerTimer();
+        panelFantasmaNaranja.detenerTimer();
+    }
+    
+    public void cerrarVentana(){
+        this.dispose();
+    }
+
 
     
 

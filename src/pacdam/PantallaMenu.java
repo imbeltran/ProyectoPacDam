@@ -146,8 +146,9 @@ public class PantallaMenu extends javax.swing.JFrame {
 
     private void botonNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartidaActionPerformed
         PantallaEleccion p = new PantallaEleccion(musica);
+        p.setSize(1500, 750);
+        p.setLocationRelativeTo(null);
         p.setVisible(true);
-        p.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.dispose();
         musicaMenu.stop();
     }//GEN-LAST:event_botonNuevaPartidaActionPerformed

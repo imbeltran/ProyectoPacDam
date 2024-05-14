@@ -4,7 +4,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
 import musicas.SClip;
 import pacdam.PantallaEleccion;
 import pacdam.PantallaJuego;
@@ -14,12 +18,13 @@ import pacdam.PantallaPausa;
 public class FantasmaNaranja extends javax.swing.JPanel {
     private int x = 0;
     private int y = 0;
+    private int dx, dy;
+    private int lastDx, lastDy;
     private boolean arriba = false;
     private boolean abajo = false;
     private boolean izquierda = false;
     private boolean derecha = false;
-    private boolean escape = false;
-    final int velocidad = 10; 
+    final int velocidad = 7; 
     private boolean pausado = false;
     private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaW.png")).getImage();
     private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaWW.png")).getImage();
@@ -38,108 +43,73 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     private boolean[][] visitado2;
     private boolean juegoTerminado = false;
     private int randomizer;
-
-
-
+    private long lastDirectionChangeTime;
+    private Random random = new Random();
+    private Timer timer;
+    
+    
+    
     public FantasmaNaranja(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
+        lastDirectionChangeTime = System.currentTimeMillis();
         x = 1001; y = 51;
         
-      
-        visitado2 = new boolean[mapa.length][mapa[0].length];
-        for (int i = 0; i < mapa.length; i++) {
-            for (int j = 0; j < mapa[i].length; j++) {
-                visitado2[i][j] = false;
-            }
-        }
+        lastDx = dx;
+        lastDy = dy;
         this.setFocusable(true);  
         initComponents();
-
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(imagenActual, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
-    public void mover() {
-        int nuevaX = x;
-        int nuevaY = y;
-        if (!pausado) {
-            if(!mapas.puedeMoverse(x, y))
-            {
-                randomizer = (int)Math.floor(Math.random()*5+1);
-                switch (randomizer) {
-                    case 1:
-                        if(randomizer!=1)
-                        {
-                            arriba = true;
-                            abajo = false;
-                            izquierda = false;
-                            derecha = false;
-                            break;
-                        }else
-                        {
-                            break;
-                        }
-                        
-                    case 2:
-                        if(randomizer!=1)
-                        {
-                            arriba = false;
-                            abajo = false;
-                            izquierda = true;
-                            derecha = false;
-                            break;
-                        }else
-                        {
-                            break;
-                        }
-                    case 3:
-                        if(randomizer!=1)
-                        {
-                            arriba = false;
-                            abajo = true;
-                            izquierda = false;
-                            derecha = false;
-                            break;
-                        }else
-                        {
-                            break;
-                        }
-                    case 4:
-                        if(randomizer!=1)
-                        {
-                            arriba = false;
-                            abajo = false;
-                            izquierda = false;
-                            derecha = true;
-                            break;     
-                        }else
-                        {
-                            break;
-                        }
-                }
-                if (arriba && mapas.puedeMoverse(x / 50, (y - velocidad) / 50) && mapas.puedeMoverse((x + 47) / 50, (y - velocidad) / 50)) {
-                    nuevaY -= velocidad;
-                } else if (abajo && mapas.puedeMoverse(x / 50, (y + velocidad + 47) / 50) && mapas.puedeMoverse((x + 47) / 50, (y + velocidad + 47) / 50)) {
-                    nuevaY += velocidad;
-                } else if (izquierda && mapas.puedeMoverse((x - velocidad) / 50, y / 50) && mapas.puedeMoverse((x - velocidad) / 50, (y + 47) / 50)) {
-                    nuevaX -= velocidad;
-                } else if (derecha && mapas.puedeMoverse((x + velocidad + 47) / 50, y / 50) && mapas.puedeMoverse((x + velocidad + 47) / 50, (y + 47) / 50)) {
-                    nuevaX += velocidad;
-                }
-                x = nuevaX;
-                y = nuevaY;
-                this.setBounds(x , y , this.getWidth(), this.getHeight());
-                comprobarImagen();
+    private void cambiarDireccion() {
+        List<int[]> possibleDirections = new ArrayList<>();
+        // Comprueba las cuatro direcciones posibles
+        int[][] directions = {{0, -50}, {0, 50}, {-50, 0}, {50, 0}};
+        for (int[] direction : directions) {
+            int newDx = direction[0];
+            int newDy = direction[1];
+            // Si el fantasma puede moverse en esta dirección y no es la dirección opuesta a la última dirección,
+            // añade esta dirección a la lista de direcciones posibles
+            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50) && (newDx != -lastDx || newDy != -lastDy)) {
+                possibleDirections.add(direction);
             }
         }
-        System.out.println("Posicion de Fantasma Naranja en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
+        // Elige una dirección aleatoria de la lista de direcciones posibles
+        int[] newDirection = possibleDirections.get(random.nextInt(possibleDirections.size()));
+        dx = newDirection[0];
+        dy = newDirection[1];
+        lastDx = dx;
+        lastDy = dy;
     }
+
+    
+    public void mover() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastDirectionChangeTime >= 1000 || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
+            // Han pasado 2 segundos o el fantasma se ha encontrado con un muro
+            cambiarDireccion();
+            lastDirectionChangeTime = currentTime;
+        }
+        x += dx;
+        y += dy;
+
+        // Actualiza la posición del panel del fantasma
+        this.setBounds(x, y, this.getWidth(), this.getHeight());
+
+        comprobarImagen();
+        repaint();
+        System.out.println("Posicion de fantasmaNaranja en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+    }
+
+
+
     
     public void comprobarImagen(){
         if (bocaAbierta && arriba) {
@@ -185,27 +155,26 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     
     
     public void reiniciar() {
-    x = 0;
-    y = 0;
+        x = 0;
+        y = 0;
 
-    puntuacion = 0;
-
-    for (int i = 0; i < visitado2.length; i++) {
-        for (int j = 0; j < visitado2[i].length; j++) {
-            visitado2[i][j] = false;
+        for (int i = 0; i < visitado2.length; i++) {
+            for (int j = 0; j < visitado2[i].length; j++) {
+                visitado2[i][j] = false;
+            }
         }
     }
+    
+    public void detenerTimer() {
+        if (timer != null)
+            timer.stop();     
     }
-
-        
-    
-    
-    
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(238, 238, 238));
+        setBackground(new java.awt.Color(0, 0, 153));
         setMaximumSize(new java.awt.Dimension(48, 48));
         setPreferredSize(new java.awt.Dimension(48, 48));
 
