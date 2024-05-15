@@ -32,7 +32,10 @@ public class PantallaInicio extends javax.swing.JFrame {
     
     public static boolean ventanaMusica() {
         int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Desea jugar con música?", "Música", JOptionPane.YES_NO_OPTION);
-        
+        if(opcionSeleccionada == JOptionPane.CLOSED_OPTION)
+        {
+            System.exit(0);
+        }
         return opcionSeleccionada == JOptionPane.YES_OPTION;
     }
 
