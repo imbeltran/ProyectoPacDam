@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import musicas.SClip;
 import pacdam.PantallaEleccion;
+import pacdam.PantallaFin;
 import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
@@ -42,7 +43,9 @@ public class PacMan extends javax.swing.JPanel {
     private boolean musica;
     private boolean cambiandoDireccion = false;
     private Timer timer;
-
+    private char ultimaTecla = ' ';
+    private char teclaActual = ' ';
+    private boolean win;
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         initComponents();
@@ -56,6 +59,13 @@ public class PacMan extends javax.swing.JPanel {
         x = 51; y = 51;
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                char currentKey = e.getKeyChar();
+                if (currentKey != teclaActual) {
+                    ultimaTecla = teclaActual;
+                    teclaActual = currentKey;
+                    //System.out.println(ultimaTecla);
+                    //System.out.println(teclaActual);
+                }
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ESCAPE:
                         pausado = !pausado;
@@ -158,6 +168,9 @@ public class PacMan extends javax.swing.JPanel {
                 pantallaJuego.detenerTimers();
                 pantallaJuego.borrarPaneles();
                 pantallaJuego.dispose();
+                win = true;
+                PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
+                pantallaFin.setVisible(true);
                 PantallaEleccion.getInstancia().setVisible(true);
                 puntuacion = 0;
             }

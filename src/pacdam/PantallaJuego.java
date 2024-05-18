@@ -31,11 +31,15 @@ public class PantallaJuego extends javax.swing.JFrame {
     private Mapa mapa;
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
+    private int puntuacion;
     private boolean musica;
     private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/cerveza.png")).getImage();
     private JPanel[][] panelesMapa;
+    private boolean win;
 
     public PantallaJuego(Mapa mapa) {
+        this.setSize(1500, 750); // Establece las dimensiones deseadas
+        this.setLocationRelativeTo(null);
         this.mapa = mapa;
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
         panelPacMan = new PacMan(datosMapa, mapa, this);
@@ -94,9 +98,9 @@ public class PantallaJuego extends javax.swing.JFrame {
                     if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)) {
                     // Pausa el juego
                     panelPacMan.setPausado(true);
-
+                    win = false;
                     // Abre la pantalla de fin de juego
-                    PantallaFin pantallaFin = new PantallaFin();
+                    PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
                     pantallaFin.setVisible(true);
                 }
                 }
@@ -148,7 +152,8 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
   
     public void actualizarPuntuacion(int puntuacion){
-        labelPuntuacion.setText("Puntuacion: " + puntuacion);      
+        labelPuntuacion.setText("Puntuacion: " + puntuacion);
+        this.puntuacion = puntuacion;
     }
     
     public void pacmanPasaPor(int i, int j) {

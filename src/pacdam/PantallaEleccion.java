@@ -17,6 +17,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
     public PantallaEleccion(boolean musica) {
         this.mapa = new Mapa();
         this.musica = musica;
+        this.setSize(1500, 750); // Establece las dimensiones deseadas
+        this.setLocationRelativeTo(null);
         initComponents();
     }
     
