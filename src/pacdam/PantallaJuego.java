@@ -95,7 +95,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
-                    if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)) {
+                    if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)||panelPacMan.chocaConFantasma(panelFantasmaNaranja1)||panelPacMan.chocaConFantasma(panelFantasmaNaranja2)||panelPacMan.chocaConFantasma(panelFantasmaNaranja3)) {
                     // Pausa el juego
                     panelPacMan.setPausado(true);
                     win = false;
