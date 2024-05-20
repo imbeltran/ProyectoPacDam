@@ -149,7 +149,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         mapa.setIndiceMapaActual(0); 
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true); 
         PantallaEleccion.getInstancia().cerrar();

@@ -242,6 +242,7 @@ public class PacMan extends javax.swing.JPanel {
     public void pausarJuego() {
         sonidoMovimiento.stop();
         PantallaPausa p = new PantallaPausa(this, musica, pantallaJuego);
+        p.setLocationRelativeTo(null);
         p.setVisible(true);
     } 
     
