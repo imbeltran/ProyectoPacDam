@@ -313,6 +313,7 @@ public class PacMan extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 0, 153));
         setMaximumSize(new java.awt.Dimension(48, 48));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(48, 48));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
