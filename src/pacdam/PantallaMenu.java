@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pacdam;
 
 import java.awt.Color;
 import javax.swing.JFrame;
 import musicas.SClip;
 
-/**
- *
- * @author Melit
- */
 public class PantallaMenu extends javax.swing.JFrame {
     private final SClip musicaMenu = new SClip("src/musicas/pacman.wav");
     private boolean musica;
