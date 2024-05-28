@@ -114,10 +114,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         repaint();
         System.out.println("Posicion de fantasmaNaranja en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
     }
-
-
-
-    
+   
     public void comprobarImagen(){
         if (bocaAbierta && arriba) {
             imagenActual = imagenCerradaW;

@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -16,7 +15,7 @@ import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
 
-public class FantasmaRojo extends javax.swing.JPanel {
+public class FantasmaAzul extends javax.swing.JPanel {
     private int x = 0;
     private int y = 0;
     private int dx, dy;
@@ -27,14 +26,14 @@ public class FantasmaRojo extends javax.swing.JPanel {
     private boolean derecha = false;
     final int velocidad = 7; 
     private boolean pausado = false;
-    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoW.png")).getImage();
-    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoWW.png")).getImage();
-    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoA.png")).getImage();
-    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoAA.png")).getImage();
-    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoS.png")).getImage();
-    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoSS.png")).getImage();
-    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoD.png")).getImage();
-    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoDD.png")).getImage();
+    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulW.png")).getImage();
+    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulWW.png")).getImage();
+    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulA.png")).getImage();
+    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulAA.png")).getImage();
+    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulS.png")).getImage();
+    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulSS.png")).getImage();
+    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulD.png")).getImage();
+    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaAzul/azulDD.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
     private boolean bocaAbierta = true;
     private Mapa mapas;
@@ -48,15 +47,13 @@ public class FantasmaRojo extends javax.swing.JPanel {
     private Random random = new Random();
     private Timer timer;
     private boolean movedBackwards = false;
-    private PacMan pacman;
     
     
     
-    public FantasmaRojo(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, PacMan pacman) {
+    public FantasmaAzul(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
-        this.pacman = pacman;
         lastDirectionChangeTime = System.currentTimeMillis();
         x = 651; y = 451;
         
@@ -72,96 +69,52 @@ public class FantasmaRojo extends javax.swing.JPanel {
         g.drawImage(imagenActual, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
-    /*
     private void cambiarDireccion() {
-        int pacmanX = pacman.getPosX();
-        int pacmanY = pacman.getPosY();
-
-        // Calcula la dirección hacia Pacman
-        int newDx = (pacmanX > x) ? 50 : (pacmanX < x) ? -50 : 0;
-        int newDy = (pacmanY > y) ? 50 : (pacmanY < y) ? -50 : 0;
-
-        // Comprueba si el fantasma puede moverse en la dirección de Pacman
-        if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50)) {
-            dx = newDx;
-            dy = newDy;
-        } else {
-            // Si no puede moverse directamente hacia Pacman, intenta moverse en una dirección perpendicular
-            if (mapas.puedeMoverse((x + newDy) / 50, (y - newDx) / 50)) {
-                dx = newDy;
-                dy = -newDx;
-            } else if (mapas.puedeMoverse((x - newDy) / 50, (y + newDx) / 50)) {
-                dx = -newDy;
-                dy = newDx;
+        List<int[]> possibleDirections = new ArrayList<>();
+        // Comprueba las cuatro direcciones posibles
+        int[][] directions = {{0, -50}, {0, 50}, {-50, 0}, {50, 0}};
+        for (int[] direction : directions) {
+            int newDx = direction[0];
+            int newDy = direction[1];
+            // Si el fantasma puede moverse en esta dirección y no es la dirección opuesta a la última dirección,
+            // añade esta dirección a la lista de direcciones posibles
+            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50) && (newDx != -lastDx || newDy != -lastDy || movedBackwards)) {
+                possibleDirections.add(direction);
             }
         }
+        // Si no hay direcciones posibles, permite que el fantasma se mueva en la dirección opuesta
+        if (possibleDirections.isEmpty()) {
+            possibleDirections.add(new int[]{-lastDx, -lastDy});
+            movedBackwards = true;
+        } else {
+            movedBackwards = false;
+        }
+        // Elige una dirección aleatoria de la lista de direcciones posibles
+        int[] newDirection = possibleDirections.get(random.nextInt(possibleDirections.size()));
+        dx = newDirection[0];
+        dy = newDirection[1];
+        lastDx = dx;
+        lastDy = dy;
     }
 
-    public void mover() {
-        int pacManX = pacman.getPosX() / 50;
-        int pacManY = pacman.getPosY() / 50;
-        if (pacManX > x / 50) {
-            dx = 50;
-            dy = 0;
-        } else if (pacManX < x / 50) {
-            dx = -50;
-            dy = 0;
-        } else if (pacManY > y / 50) {
-            dx = 0;
-            dy = 50;
-        } else if (pacManY < y / 50) {
-            dx = 0;
-            dy = -50;
-        }
-        if (mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
-            x += dx;
-            y += dy;
-        }
-        
-        this.setBounds(x, y, this.getWidth(), this.getHeight());
-        comprobarImagen();
-        repaint();
-        System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
-    }*/
     
-   private void cambiarDireccion() {
-    int pacmanX = pacman.getPosX();
-    int pacmanY = pacman.getPosY();
-
-    // Calcula la dirección hacia Pacman
-    int newDx = (pacmanX > x) ? 50 : (pacmanX < x) ? -50 : 0;
-    int newDy = (pacmanY > y) ? 50 : (pacmanY < y) ? -50 : 0;
-
-    // Comprueba si el fantasma puede moverse en la dirección de Pacman
-    if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50)) {
-        dx = newDx;
-        dy = newDy;
-    } else {
-        // Si no puede moverse directamente hacia Pacman, intenta moverse en una dirección aleatoria
-        int[] direcciones = {-50, 0, 50};
-        Random rand = new Random();
-        do {
-            dx = direcciones[rand.nextInt(3)];
-            dy = direcciones[rand.nextInt(3)];
-        } while (!mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50));
-    }
-}
-
-public void mover() {
-    // Comprueba si el fantasma puede cambiar de dirección en cada paso
-    cambiarDireccion();
-    if (mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
+    public void mover() {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastDirectionChangeTime >= 1000 || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
+            cambiarDireccion();
+            lastDirectionChangeTime = currentTime;
+        }
         x += dx;
         y += dy;
-    }
-    
-    this.setBounds(x, y, this.getWidth(), this.getHeight());
-    comprobarImagen();
-    repaint();
-    System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
-}
 
-        
+        // Actualiza la posición del panel del fantasma
+        this.setBounds(x, y, this.getWidth(), this.getHeight());
+
+        comprobarImagen();
+        repaint();
+        System.out.println("Posicion de fantasmaNaranja en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+    }
+   
     public void comprobarImagen(){
         if (bocaAbierta && arriba) {
             imagenActual = imagenCerradaW;
