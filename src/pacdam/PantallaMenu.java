@@ -1,5 +1,6 @@
 package pacdam;
 
+import clases.Partida;
 import java.awt.Color;
 import javax.swing.JFrame;
 import musicas.SClip;
@@ -146,6 +147,8 @@ public class PantallaMenu extends javax.swing.JFrame {
         PantallaEleccion p = new PantallaEleccion(musica);
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
+        Partida pa = new Partida();
+        pa.crearPartida();
         p.setVisible(true);
         this.dispose();
         musicaMenu.stop();

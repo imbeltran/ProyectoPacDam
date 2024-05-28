@@ -1,6 +1,11 @@
 package pacdam;
 
+import bibliotecas.Conexion;
 import clases.Mapa;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 
 public class PantallaEleccion extends javax.swing.JFrame {
@@ -8,18 +13,56 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private Mapa mapa;
     private static PantallaEleccion instancia;
     private boolean musica;
+    Conexion con = new Conexion();
+    Connection conet;
+    Statement st;
+    ResultSet rs;
+    ResultSet rs2;
+    
+    String sqlMapa2 = "SELECT estado FROM Mapas WHERE MapaID = 1";
+    String sqlMapa3 = "SELECT estado FROM Mapas WHERE MapaID = 2";
+    //String sql4 = "SELECT estado FROM Mapas WHERE MapaID = 3";
     
     public PantallaEleccion() {
         this.mapa = new Mapa();
-
         initComponents();
     }
     public PantallaEleccion(boolean musica) {
+        initComponents();
         this.mapa = new Mapa();
         this.musica = musica;
         this.setSize(1500, 750); // Establece las dimensiones deseadas
         this.setLocationRelativeTo(null);
-        initComponents();
+        try {
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlMapa2);
+            if (rs.next()) {
+                boolean estado = rs.getBoolean("estado");
+                if(estado)
+                    botonNivel2.setEnabled(true);
+                else
+                    botonNivel2.setEnabled(false);
+            }
+            rs2 = st.executeQuery(sqlMapa3);
+            if (rs2.next()) {
+                boolean estado = rs2.getBoolean("estado");
+                if(estado)
+                    botonNivel3.setEnabled(true);
+                else
+                    botonNivel3.setEnabled(false);
+            }
+            /*rs = st.executeQuery(sql4);
+            if (rs.next()) {
+                boolean estado = rs.getBoolean("estado");
+                if(estado)
+                {
+                    
+                }
+            }*/
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     
