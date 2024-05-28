@@ -46,6 +46,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     private long lastDirectionChangeTime;
     private Random random = new Random();
     private Timer timer;
+    private boolean movedBackwards = false;
     
     
     
@@ -54,7 +55,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
         lastDirectionChangeTime = System.currentTimeMillis();
-        x = 1001; y = 51;
+        x = 651; y = 451;
         
         lastDx = dx;
         lastDy = dy;
@@ -77,9 +78,16 @@ public class FantasmaNaranja extends javax.swing.JPanel {
             int newDy = direction[1];
             // Si el fantasma puede moverse en esta dirección y no es la dirección opuesta a la última dirección,
             // añade esta dirección a la lista de direcciones posibles
-            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50) && (newDx != -lastDx || newDy != -lastDy)) {
+            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50) && (newDx != -lastDx || newDy != -lastDy || movedBackwards)) {
                 possibleDirections.add(direction);
             }
+        }
+        // Si no hay direcciones posibles, permite que el fantasma se mueva en la dirección opuesta
+        if (possibleDirections.isEmpty()) {
+            possibleDirections.add(new int[]{-lastDx, -lastDy});
+            movedBackwards = true;
+        } else {
+            movedBackwards = false;
         }
         // Elige una dirección aleatoria de la lista de direcciones posibles
         int[] newDirection = possibleDirections.get(random.nextInt(possibleDirections.size()));
@@ -93,7 +101,6 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     public void mover() {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastDirectionChangeTime >= 1000 || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
-            // Han pasado 2 segundos o el fantasma se ha encontrado con un muro
             cambiarDireccion();
             lastDirectionChangeTime = currentTime;
         }

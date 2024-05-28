@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import musicas.SClip;
 import pacdam.PantallaEleccion;
+import pacdam.PantallaFin;
 import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
@@ -42,6 +43,13 @@ public class PacMan extends javax.swing.JPanel {
     private boolean musica;
     private boolean cambiandoDireccion = false;
     private Timer timer;
+    private boolean win;
+    
+    //añadido nuevo 
+    private boolean nuevaArriba = false;
+    private boolean nuevaAbajo = false;
+    private boolean nuevaIzquierda = false;
+    private boolean nuevaDerecha = false;
 
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
@@ -56,6 +64,7 @@ public class PacMan extends javax.swing.JPanel {
         x = 51; y = 51;
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
+                char currentKey = e.getKeyChar();
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_ESCAPE:
                         pausado = !pausado;
@@ -64,40 +73,40 @@ public class PacMan extends javax.swing.JPanel {
                         }
                         break;
                     case KeyEvent.VK_W:
-                        arriba = true;
-                        abajo = false;
-                        izquierda = false;
-                        derecha = false;
+                        nuevaArriba = true;
+                        nuevaAbajo = false;
+                        nuevaIzquierda = false;
+                        nuevaDerecha = false;
                         if(musica){
                             sonidoMovimiento.stop();
                             sonidoMovimiento.loop();
                         }
                         break;
                     case KeyEvent.VK_A:
-                        arriba = false;
-                        abajo = false;
-                        izquierda = true;
-                        derecha = false;
+                        nuevaArriba = false;
+                        nuevaAbajo = false;
+                        nuevaIzquierda = true;
+                        nuevaDerecha = false;
                         if(musica){
                             sonidoMovimiento.stop();
                             sonidoMovimiento.loop();      
                         }
                         break;
                     case KeyEvent.VK_S:
-                        arriba = false;
-                        abajo = true;
-                        izquierda = false;
-                        derecha = false;
+                        nuevaArriba = false;
+                        nuevaAbajo = true;
+                        nuevaIzquierda = false;
+                        nuevaDerecha = false;
                         if(musica){
                             sonidoMovimiento.stop();
                             sonidoMovimiento.loop(); 
                         }
                         break;
-                    case KeyEvent.VK_D:                        
-                        arriba = false;
-                        abajo = false;
-                        izquierda = false;
-                        derecha = true;
+                    case KeyEvent.VK_D:    
+                        nuevaArriba = false;
+                        nuevaAbajo = false;
+                        nuevaIzquierda = false;
+                        nuevaDerecha = true;
                         if(musica){
                             sonidoMovimiento.stop();
                             sonidoMovimiento.loop();       
@@ -126,10 +135,36 @@ public class PacMan extends javax.swing.JPanel {
     public void mover() {
         int nuevaX = x;
         int nuevaY = y;
+
         if (escape && !pausado) {
             pausarJuego();
         }
-        if (!pausado) {  
+
+        if (!pausado) {
+            // Intentar cambiar de dirección primero
+            if (nuevaArriba && mapas.puedeMoverse(x / 50, (y - velocidad) / 50) && mapas.puedeMoverse((x + 47) / 50, (y - velocidad) / 50)) {
+                arriba = true;
+                abajo = false;
+                izquierda = false;
+                derecha = false;
+            } else if (nuevaAbajo && mapas.puedeMoverse(x / 50, (y + velocidad + 47) / 50) && mapas.puedeMoverse((x + 47) / 50, (y + velocidad + 47) / 50)) {
+                arriba = false;
+                abajo = true;
+                izquierda = false;
+                derecha = false;
+            } else if (nuevaIzquierda && mapas.puedeMoverse((x - velocidad) / 50, y / 50) && mapas.puedeMoverse((x - velocidad) / 50, (y + 47) / 50)) {
+                arriba = false;
+                abajo = false;
+                izquierda = true;
+                derecha = false;
+            } else if (nuevaDerecha && mapas.puedeMoverse((x + velocidad + 47) / 50, y / 50) && mapas.puedeMoverse((x + velocidad + 47) / 50, (y + 47) / 50)) {
+                arriba = false;
+                abajo = false;
+                izquierda = false;
+                derecha = true;
+            }
+
+            // Intentar moverse en la dirección actual
             if (arriba && mapas.puedeMoverse(x / 50, (y - velocidad) / 50) && mapas.puedeMoverse((x + 47) / 50, (y - velocidad) / 50)) {
                 nuevaY -= velocidad;
             } else if (abajo && mapas.puedeMoverse(x / 50, (y + velocidad + 47) / 50) && mapas.puedeMoverse((x + 47) / 50, (y + velocidad + 47) / 50)) {
@@ -139,9 +174,10 @@ public class PacMan extends javax.swing.JPanel {
             } else if (derecha && mapas.puedeMoverse((x + velocidad + 47) / 50, y / 50) && mapas.puedeMoverse((x + velocidad + 47) / 50, (y + 47) / 50)) {
                 nuevaX += velocidad;
             }
+
             x = nuevaX;
             y = nuevaY;
-            this.setBounds(x , y , this.getWidth(), this.getHeight());
+            this.setBounds(x, y, this.getWidth(), this.getHeight());
 
             int matrizX = x / 50;
             int matrizY = y / 50;
@@ -153,18 +189,21 @@ public class PacMan extends javax.swing.JPanel {
                     pantallaJuego.pacmanPasaPor(matrizY, matrizX);
                 }
             }
+
             if (puntuacion == mapas.getPuntuacionTotal()) {
                 System.out.println("¡Felicidades! Te has pasado el nivel.");
                 pantallaJuego.detenerTimers();
                 pantallaJuego.borrarPaneles();
                 pantallaJuego.dispose();
+                win = true;
+                PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
+                pantallaFin.setVisible(true);
                 PantallaEleccion.getInstancia().setVisible(true);
                 puntuacion = 0;
             }
+
             comprobarImagen();
-        }      
-        //System.out.println("Posicion de PacMan en el mapa: (" + (x / 50) + ", " + (y / 50) + ")");
-        //System.out.println("Puntuacion: "+puntuacion);
+        }
     }
 
     
@@ -229,6 +268,7 @@ public class PacMan extends javax.swing.JPanel {
     public void pausarJuego() {
         sonidoMovimiento.stop();
         PantallaPausa p = new PantallaPausa(this, musica, pantallaJuego);
+        p.setLocationRelativeTo(null);
         p.setVisible(true);
     } 
     
@@ -273,6 +313,7 @@ public class PacMan extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(0, 0, 153));
         setMaximumSize(new java.awt.Dimension(48, 48));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(48, 48));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

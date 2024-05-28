@@ -1,6 +1,7 @@
 package pacdam;
 
 import clases.FantasmaNaranja;
+import clases.FantasmaRojo;
 import clases.Mapa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,20 +25,23 @@ import javax.swing.SwingUtilities;
 public class PantallaJuego extends javax.swing.JFrame { 
     PacMan panelPacMan;
     FantasmaNaranja panelFantasmaNaranja;
-    FantasmaNaranja panelFantasmaNaranja1;
-    FantasmaNaranja panelFantasmaNaranja2;
-    FantasmaNaranja panelFantasmaNaranja3;
+    FantasmaRojo panelFantasmaRojo;
     private Timer timer;
     private Mapa mapa;
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
+    private int puntuacion;
     private boolean musica;
     private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/cerveza.png")).getImage();
     private JPanel[][] panelesMapa;
+    private boolean win;
 
     public PantallaJuego(Mapa mapa) {
+        this.setSize(1500, 750); // Establece las dimensiones deseadas
+        this.setLocationRelativeTo(null);
         this.mapa = mapa;
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        
         panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
@@ -46,9 +50,10 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
         
-        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja1);
-        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
+        panelFantasmaRojo = new FantasmaRojo(datosMapa, mapa, this, panelPacMan);
+        this.add(panelFantasmaRojo);
+        panelFantasmaRojo.setBounds(panelFantasmaRojo.getPosX(), panelFantasmaRojo.getPosY(), 48, 48);
+        
         
         crearMapa();
         initComponents();
@@ -67,22 +72,16 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
         
-        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja1);
-        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
+        panelFantasmaRojo = new FantasmaRojo(datosMapa, mapa, this, panelPacMan);
+        this.add(panelFantasmaRojo);
+        panelFantasmaRojo.setBounds(panelFantasmaRojo.getPosX(), panelFantasmaRojo.getPosY(), 48, 48);
         
-        panelFantasmaNaranja2 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja2);
-        panelFantasmaNaranja2.setBounds(panelFantasmaNaranja2.getPosX(), panelFantasmaNaranja2.getPosY(), 48, 48);
-        
-        panelFantasmaNaranja3 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja3);
-        panelFantasmaNaranja3.setBounds(panelFantasmaNaranja3.getPosX(), panelFantasmaNaranja3.getPosY(), 48, 48);
         
         crearMapa();          
         initComponents();    
         movimientoPacMan();
         movimientoFantasmaNaranja();
+        movimientoFantasmaRojo();
     }
     
     public void movimientoPacMan(){
@@ -94,9 +93,9 @@ public class PantallaJuego extends javax.swing.JFrame {
                     if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)) {
                     // Pausa el juego
                     panelPacMan.setPausado(true);
-
+                    win = false;
                     // Abre la pantalla de fin de juego
-                    PantallaFin pantallaFin = new PantallaFin();
+                    PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
                     pantallaFin.setVisible(true);
                 }
                 }
@@ -104,16 +103,25 @@ public class PantallaJuego extends javax.swing.JFrame {
         });
         timer.start();
     }
-    
+
     public void movimientoFantasmaNaranja(){
         timer = new Timer(400, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
-                    panelFantasmaNaranja.mover();
-                    panelFantasmaNaranja1.mover();
-                    panelFantasmaNaranja2.mover();
-                    panelFantasmaNaranja3.mover();
+                    panelFantasmaNaranja.mover();   
+                }
+            }
+        });
+        timer.start();
+    }
+    
+    public void movimientoFantasmaRojo(){
+        timer = new Timer(400, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelPacMan.getPausado()) {
+                    panelFantasmaRojo.mover();   
                 }
             }
         });
@@ -148,7 +156,8 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
   
     public void actualizarPuntuacion(int puntuacion){
-        labelPuntuacion.setText("Puntuacion: " + puntuacion);      
+        labelPuntuacion.setText("Puntuacion: " + puntuacion);
+        this.puntuacion = puntuacion;
     }
     
     public void pacmanPasaPor(int i, int j) {
@@ -164,7 +173,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     public void borrarPaneles() {
         this.getContentPane().remove(panelPacMan);
         this.getContentPane().remove(panelFantasmaNaranja);
-        this.getContentPane().remove(panelFantasmaNaranja1);
+        this.getContentPane().remove(panelFantasmaRojo);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
     }
