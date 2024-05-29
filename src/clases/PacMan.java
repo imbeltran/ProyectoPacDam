@@ -196,7 +196,7 @@ public class PacMan extends javax.swing.JPanel {
                 pantallaJuego.borrarPaneles();
                 pantallaJuego.dispose();
                 win = true;
-                PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
+                PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapas, musica);
                 pantallaFin.setVisible(true);
                 PantallaEleccion.getInstancia().setVisible(true);
                 puntuacion = 0;
@@ -299,10 +299,22 @@ public class PacMan extends javax.swing.JPanel {
             timer.stop();     
     }
     
-    public boolean chocaConFantasma(FantasmaNaranja fantasma) {
-        // Comprueba si las posiciones de Pacman y del fantasma son las mismas
-        return this.getPosX() == fantasma.getPosX() && this.getPosY() == fantasma.getPosY();
+    public boolean chocaConFantasmaNaranja(FantasmaNaranja fantasma) {
+        // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
+        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
     }
+
+    public boolean chocaConFantasmaAzul(FantasmaAzul fantasma) {
+        // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
+        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+    }
+
+    public boolean chocaConFantasmaRojo(FantasmaRojo fantasma) {
+        // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
+        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+    }
+
+
         
     
     

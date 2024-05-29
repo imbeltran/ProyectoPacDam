@@ -47,6 +47,7 @@ public class FantasmaAzul extends javax.swing.JPanel {
     private Random random = new Random();
     private Timer timer;
     private boolean movedBackwards = false;
+    private int origenX, origenY;
     
     
     
@@ -56,6 +57,7 @@ public class FantasmaAzul extends javax.swing.JPanel {
         this.pantallaJuego = pantallaJuego;
         lastDirectionChangeTime = System.currentTimeMillis();
         x = 651; y = 451;
+        origenX = 651; origenY = 451;
         
         lastDx = dx;
         lastDy = dy;
@@ -76,18 +78,10 @@ public class FantasmaAzul extends javax.swing.JPanel {
         for (int[] direction : directions) {
             int newDx = direction[0];
             int newDy = direction[1];
-            // Si el fantasma puede moverse en esta dirección y no es la dirección opuesta a la última dirección,
-            // añade esta dirección a la lista de direcciones posibles
-            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50) && (newDx != -lastDx || newDy != -lastDy || movedBackwards)) {
+            // Si el fantasma puede moverse en esta dirección, añade esta dirección a la lista de direcciones posibles
+            if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50)) {
                 possibleDirections.add(direction);
             }
-        }
-        // Si no hay direcciones posibles, permite que el fantasma se mueva en la dirección opuesta
-        if (possibleDirections.isEmpty()) {
-            possibleDirections.add(new int[]{-lastDx, -lastDy});
-            movedBackwards = true;
-        } else {
-            movedBackwards = false;
         }
         // Elige una dirección aleatoria de la lista de direcciones posibles
         int[] newDirection = possibleDirections.get(random.nextInt(possibleDirections.size()));
@@ -96,6 +90,7 @@ public class FantasmaAzul extends javax.swing.JPanel {
         lastDx = dx;
         lastDy = dy;
     }
+
 
     
     public void mover() {
@@ -152,6 +147,14 @@ public class FantasmaAzul extends javax.swing.JPanel {
         return y;
     }
     
+    public void setPosX(int x) {
+        this.x = x;
+    }
+
+    public void setPosY(int y) {
+        this.y = y;
+    }
+    
     /*public void pausarJuego() {
         PantallaPausa p = new PantallaPausa(this);
         p.setVisible(true);
@@ -172,6 +175,11 @@ public class FantasmaAzul extends javax.swing.JPanel {
     public void detenerTimer() {
         if (timer != null)
             timer.stop();     
+    }
+    
+    public void volverAlOrigen() {
+        this.setPosX(origenX);
+        this.setPosY(origenY);
     }
    
     @SuppressWarnings("unchecked")

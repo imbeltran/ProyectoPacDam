@@ -47,6 +47,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     private Random random = new Random();
     private Timer timer;
     private boolean movedBackwards = false;
+    private int origenX, origenY;
     
     
     
@@ -56,6 +57,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         this.pantallaJuego = pantallaJuego;
         lastDirectionChangeTime = System.currentTimeMillis();
         x = 651; y = 451;
+        origenX = 651; origenY = 451;
         
         lastDx = dx;
         lastDy = dy;
@@ -152,6 +154,14 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         return y;
     }
     
+    public void setPosX(int x) {
+        this.x = x;
+    }
+
+    public void setPosY(int y) {
+        this.y = y;
+    }
+    
     /*public void pausarJuego() {
         PantallaPausa p = new PantallaPausa(this);
         p.setVisible(true);
@@ -172,6 +182,11 @@ public class FantasmaNaranja extends javax.swing.JPanel {
     public void detenerTimer() {
         if (timer != null)
             timer.stop();     
+    }
+    
+    public void volverAlOrigen() {
+        this.setPosX(origenX);
+        this.setPosY(origenY);
     }
    
     @SuppressWarnings("unchecked")

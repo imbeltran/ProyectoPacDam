@@ -26,24 +26,26 @@ import javax.swing.SwingUtilities;
 public class PantallaJuego extends javax.swing.JFrame { 
     PacMan panelPacMan;
     FantasmaNaranja panelFantasmaNaranja;
-    FantasmaNaranja panelFantasmaNaranja1;
     FantasmaRojo panelFantasmaRojo;
     FantasmaAzul panelFantasmaAzul;
+    PantallaJuego pantallaJuego;
     private Timer timer;
     private Mapa mapa;
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
     private int puntuacion;
     private boolean musica;
-    private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png")).getImage();
+    //private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png")).getImage();
     private JPanel[][] panelesMapa;
     private boolean win;
+    private boolean irBorracho = false;
 
     public PantallaJuego(Mapa mapa) {
         this.setSize(1500, 750); // Establece las dimensiones deseadas
         this.setLocationRelativeTo(null);
         this.mapa = mapa;
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        this.pantallaJuego = pantallaJuego;
         
         panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
@@ -52,10 +54,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
-        
-        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja1);
-        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
         
         panelFantasmaRojo = new FantasmaRojo(datosMapa, mapa, this, panelPacMan);
         this.add(panelFantasmaRojo);
@@ -74,6 +72,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     public PantallaJuego(Mapa mapa, boolean musica) {
         this.mapa = mapa;
         this.musica = musica;
+        this.pantallaJuego = pantallaJuego;
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
         panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
@@ -82,10 +81,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
         this.add(panelFantasmaNaranja);
         panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
-        
-        panelFantasmaNaranja1 = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja1);
-        panelFantasmaNaranja1.setBounds(panelFantasmaNaranja1.getPosX(), panelFantasmaNaranja1.getPosY(), 48, 48);
         
         panelFantasmaRojo = new FantasmaRojo(datosMapa, mapa, this, panelPacMan);
         this.add(panelFantasmaRojo);
@@ -103,25 +98,77 @@ public class PantallaJuego extends javax.swing.JFrame {
         movimientoFantasmaRojo();
     }
     
+    /*
     public void movimientoPacMan(){
-        timer = new Timer(30, new ActionListener() {
+        timer = new Timer(40, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelPacMan.mover();
-                    if (panelPacMan.chocaConFantasma(panelFantasmaNaranja)) {
+                    if (panelPacMan.chocaConFantasmaNaranja(panelFantasmaNaranja)||panelPacMan.chocaConFantasmaAzul(panelFantasmaAzul)||panelPacMan.chocaConFantasmaRojo(panelFantasmaRojo)) {
                         // Pausa el juego
                         panelPacMan.setPausado(true);
                         win = false;
                         // Abre la pantalla de fin de juego
-                        PantallaFin pantallaFin = new PantallaFin(puntuacion, win);
+                        PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa, musica);
                         pantallaFin.setVisible(true);
+                        cerrarVentana();
                     }   
                 }
             }
         });
         timer.start();
+    }*/
+    
+    public void movimientoPacMan(){
+        timer = new Timer(40, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelPacMan.getPausado()) {
+                    panelPacMan.mover();
+                    int posX = panelPacMan.getPosX() / 50;
+                    int posY = panelPacMan.getPosY() / 50;
+                    // Comprueba si Pacman está en una celda con una cerveza
+                    if (datosMapa[posY][posX] == 2) {
+                        irBorracho = true;
+                        // Inicia un temporizador para desactivar la cerveza después de 5 segundos
+                        new Timer(5000, new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                irBorracho = false;
+                            }
+                        }).start();
+                        // Cambia el valor en el mapa para que la cerveza no se vuelva a activar
+                        datosMapa[posY][posX] = 0;
+                    }
+                    if (irBorracho) {
+                        // Si la cerveza está activa, Pacman puede "comer" a los fantasmas
+                        if (panelPacMan.chocaConFantasmaNaranja(panelFantasmaNaranja)) {
+                            panelFantasmaNaranja.setBounds(651, 451, 48, 48);
+                        } else if (panelPacMan.chocaConFantasmaAzul(panelFantasmaAzul)) {
+                            panelFantasmaAzul.setBounds(651, 451, 48, 48);
+                        } else if (panelPacMan.chocaConFantasmaRojo(panelFantasmaRojo)) {
+                            panelFantasmaRojo.setBounds(651, 451, 48, 48);
+                        }   
+                    } else {
+                        // Si la cerveza no está activa, los fantasmas pueden "comer" a Pacman
+                        if (panelPacMan.chocaConFantasmaNaranja(panelFantasmaNaranja)||panelPacMan.chocaConFantasmaAzul(panelFantasmaAzul)||panelPacMan.chocaConFantasmaRojo(panelFantasmaRojo)) {
+                            // Pausa el juego
+                            panelPacMan.setPausado(true);
+                            win = false;
+                            // Abre la pantalla de fin de juego
+                            PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa, musica);
+                            pantallaFin.setVisible(true);
+                            cerrarVentana();
+                        }   
+                    }
+                }
+            }
+        });
+        timer.start();
     }
+
+
 
     public void movimientoFantasmas(){
         timer = new Timer(300, new ActionListener() {
@@ -129,7 +176,6 @@ public class PantallaJuego extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     panelFantasmaNaranja.mover();
-                    panelFantasmaNaranja1.mover();
                     panelFantasmaAzul.mover();
                 }
             }
@@ -162,11 +208,17 @@ public class PantallaJuego extends javax.swing.JFrame {
                 }
                 if (datosMapa[i][j] == 1) {
                     panel.setBackground(Color.BLACK);
+                } else if (datosMapa[i][j] == 2) {
+                    panel.setBackground(new Color(0, 0, 153));
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/cerveza.png"));
+                    JLabel cerveza = new JLabel(icon);
+                    cerveza.setBounds(20, 20, 20, 20);
+                    panel.add(cerveza);
                 } else {
                     panel.setBackground(new Color(0, 0, 153));
-                    JPanel bitcoin = new JPanel();
-                    bitcoin.setBackground(RED);
-                    bitcoin.setBounds(20, 20, 10, 10);
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png"));
+                    JLabel bitcoin = new JLabel(icon);
+                    bitcoin.setBounds(20, 20, 20, 20);
                     panel.add(bitcoin);
                 }
                 panel.setBounds(j * 50, i * 50, 50, 50); // Establecemos la posición y el tamaño del panel
@@ -207,6 +259,10 @@ public class PantallaJuego extends javax.swing.JFrame {
     
     public void cerrarVentana(){
         this.dispose();
+    }
+    
+    public boolean getIrBorracho(){
+        return irBorracho;
     }
 
 

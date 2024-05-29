@@ -49,6 +49,7 @@ public class FantasmaRojo extends javax.swing.JPanel {
     private Timer timer;
     private boolean movedBackwards = false;
     private PacMan pacman;
+    private int origenX, origenY;
     
     
     
@@ -59,6 +60,7 @@ public class FantasmaRojo extends javax.swing.JPanel {
         this.pacman = pacman;
         lastDirectionChangeTime = System.currentTimeMillis();
         x = 651; y = 451;
+        origenX = 651; origenY = 451;
         
         lastDx = dx;
         lastDy = dy;
@@ -199,6 +201,13 @@ public void mover() {
         return y;
     }
     
+    public void setPosX(int x) {
+        this.x = x;
+    }
+
+    public void setPosY(int y) {
+        this.y = y;
+    }
     /*public void pausarJuego() {
         PantallaPausa p = new PantallaPausa(this);
         p.setVisible(true);
@@ -219,6 +228,11 @@ public void mover() {
     public void detenerTimer() {
         if (timer != null)
             timer.stop();     
+    }
+    
+    public void volverAlOrigen() {
+        this.setPosX(origenX);
+        this.setPosY(origenY);
     }
    
     @SuppressWarnings("unchecked")
