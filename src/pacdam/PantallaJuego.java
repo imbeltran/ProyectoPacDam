@@ -13,10 +13,13 @@ import javax.swing.Timer;
 import clases.PacMan;
 import java.awt.Color;
 import static java.awt.Color.RED;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -34,11 +37,16 @@ public class PantallaJuego extends javax.swing.JFrame {
     public int[][] datosMapa;
     private JLabel puntuacionLabel;
     private int puntuacion;
+    private int puntuacionTotal;
     private boolean musica;
     //private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png")).getImage();
     private JPanel[][] panelesMapa;
     private boolean win;
     private boolean irBorracho = false;
+    private int nivel;
+    private List<FantasmaNaranja> fantasmasNaranjas;
+    private List<Timer> timers;
+    private boolean modoInfinito;
 
     public PantallaJuego(Mapa mapa) {
         this.setSize(1500, 750); // Establece las dimensiones deseadas
@@ -97,6 +105,35 @@ public class PantallaJuego extends javax.swing.JFrame {
         movimientoFantasmas();
         movimientoFantasmaRojo();
     }
+    
+    public PantallaJuego(Mapa mapa, boolean musica, boolean modoInfinito) {
+        this.setSize(1500, 750); // Establece las dimensiones deseadas
+        this.setLocationRelativeTo(null);
+        this.mapa = mapa;
+        datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        this.pantallaJuego = pantallaJuego;
+        this.nivel = 1;
+        this.fantasmasNaranjas = new ArrayList<>();
+        this.timers = new ArrayList<>();
+
+        panelPacMan = new PacMan(datosMapa, mapa, this, musica);
+        this.add(panelPacMan);
+        panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
+
+        for (int i = 0; i < 4 + 2 * (nivel - 1); i++) {
+            FantasmaNaranja fantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
+            this.add(fantasmaNaranja);
+            fantasmaNaranja.setBounds(fantasmaNaranja.getPosX(), fantasmaNaranja.getPosY(), 48, 48);
+            fantasmasNaranjas.add(fantasmaNaranja);
+        }
+
+        crearMapa();
+        initComponents();
+        movimientoPacManInfinito();
+        movimientoFantasmasInfinito();
+    }
+    
+    
     
     /*
     public void movimientoPacMan(){
@@ -167,6 +204,57 @@ public class PantallaJuego extends javax.swing.JFrame {
         });
         timer.start();
     }
+    
+    public void movimientoPacManInfinito(){
+    timer = new Timer(40, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (!panelPacMan.getPausado()) {
+                panelPacMan.mover();
+                verificarPuntos();
+                int posX = panelPacMan.getPosX() / 50;
+                int posY = panelPacMan.getPosY() / 50;
+                // Comprueba si Pacman está en una celda con una cerveza
+                if (datosMapa[posY][posX] == 2) {
+                    irBorracho = true;
+                    // Inicia un temporizador para desactivar la cerveza después de 5 segundos
+                    new Timer(5000, new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            irBorracho = false;
+                        }
+                    }).start();
+                    // Cambia el valor en el mapa para que la cerveza no se vuelva a activar
+                    datosMapa[posY][posX] = 0;
+                }
+                if (irBorracho) {
+                    // Si la cerveza está activa, Pacman puede "comer" a los fantasmas
+                    for (FantasmaNaranja fantasmaNaranja : fantasmasNaranjas) {
+                        if (panelPacMan.chocaConFantasmaNaranja(fantasmaNaranja)) {
+                            fantasmaNaranja.setBounds(651, 451, 48, 48);
+                        }
+                    }
+                    // ... (repite para los otros tipos de fantasmas)
+                } else {
+                    // Si la cerveza no está activa, los fantasmas pueden "comer" a Pacman
+                    for (FantasmaNaranja fantasmaNaranja : fantasmasNaranjas) {
+                        if (panelPacMan.chocaConFantasmaNaranja(fantasmaNaranja)) {
+                            // Pausa el juego
+                            panelPacMan.setPausado(true);
+                            win = false;
+                            // Abre la pantalla de fin de juego
+                            PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa, musica);
+                            pantallaFin.setVisible(true);
+                            cerrarVentana();
+                        }
+                    }
+                    // ... (repite para los otros tipos de fantasmas)
+                }
+            }
+        }
+    });
+    timer.start();
+}
 
 
 
@@ -194,6 +282,22 @@ public class PantallaJuego extends javax.swing.JFrame {
         });
         timer.start();
     }
+    
+    public void movimientoFantasmasInfinito(){
+        Timer timerFantasmas = new Timer(300, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!panelPacMan.getPausado()) {
+                    for (FantasmaNaranja fantasmaNaranja : fantasmasNaranjas) {
+                        fantasmaNaranja.mover();
+                    }
+                }
+            }
+        });
+        timerFantasmas.start();
+        timers.add(timerFantasmas);
+    }
+
     
     
     public void crearMapa() {
@@ -244,17 +348,26 @@ public class PantallaJuego extends javax.swing.JFrame {
         }
     }
     
-    public void borrarPaneles() {
+    /*public void borrarPaneles() {
         this.getContentPane().remove(panelPacMan);
         this.getContentPane().remove(panelFantasmaNaranja);
         this.getContentPane().remove(panelFantasmaRojo);
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
+    }*/
+    
+    public void borrarPaneles() {
+        for (Component comp : this.getContentPane().getComponents()) {
+            if (comp != null) {
+                this.getContentPane().remove(comp);
+            }
+        }
+        this.getContentPane().repaint();
     }
     
     public void detenerTimers() {
         panelPacMan.detenerTimer();
-        panelFantasmaNaranja.detenerTimer();
+        //panelFantasmaNaranja.detenerTimer();
     }
     
     public void cerrarVentana(){
@@ -263,6 +376,46 @@ public class PantallaJuego extends javax.swing.JFrame {
     
     public boolean getIrBorracho(){
         return irBorracho;
+    }
+    
+    public void verificarPuntos() {
+        boolean todosLosPuntosRecogidos = true;
+        for (int i = 0; i < datosMapa.length; i++) {
+            for (int j = 0; j < datosMapa[i].length; j++) {
+                if (datosMapa[i][j] == 0) { // Asume que 1 representa un punto en tu mapa
+                    todosLosPuntosRecogidos = false;
+                    break;
+                }
+            }
+            if (!todosLosPuntosRecogidos) {
+                break;
+            }
+        }
+
+        if (todosLosPuntosRecogidos) {
+            nivel++;
+            for (int i = 0; i < 2; i++) {
+                FantasmaNaranja fantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
+                this.add(fantasmaNaranja);
+                fantasmaNaranja.setBounds(fantasmaNaranja.getPosX(), fantasmaNaranja.getPosY(), 48, 48);
+                fantasmasNaranjas.add(fantasmaNaranja);
+            }
+            for (Timer timer : timers) {
+                timer.stop();
+            }
+            // Suma la puntuación a puntuacionTotal
+            puntuacionTotal += panelPacMan.getPuntuacion();
+            // Reinicia la puntuación de Pacman
+            panelPacMan.setPuntuacion(0);
+            // Reinicia la partida
+            this.dispose(); // Cierra la ventana actual
+            PantallaJuego nuevaPartida = new PantallaJuego(mapa, musica, true); // Abre una nueva partida
+            nuevaPartida.setVisible(true);
+        }
+    }
+    
+    public boolean getModoInfinito(){
+        return modoInfinito;
     }
 
 

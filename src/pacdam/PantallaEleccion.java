@@ -13,6 +13,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private Mapa mapa;
     private static PantallaEleccion instancia;
     private boolean musica;
+    private boolean modoInfinito = true;
     Conexion con = new Conexion();
     Connection conet;
     Statement st;
@@ -88,6 +89,9 @@ public class PantallaEleccion extends javax.swing.JFrame {
         botonNivel2 = new javax.swing.JButton();
         botonNivel1 = new javax.swing.JButton();
         botonNivel3 = new javax.swing.JButton();
+        botonNivel4 = new javax.swing.JButton();
+        botonNivel5 = new javax.swing.JButton();
+        botonNivelInfinito = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -148,6 +152,27 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        botonNivel4.setText("Nivel 4");
+        botonNivel4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNivel4ActionPerformed(evt);
+            }
+        });
+
+        botonNivel5.setText("Nivel 5");
+        botonNivel5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNivel5ActionPerformed(evt);
+            }
+        });
+
+        botonNivelInfinito.setText("Infinito");
+        botonNivelInfinito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNivelInfinitoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -157,6 +182,14 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addComponent(botonNivel4)
+                .addGap(92, 92, 92)
+                .addComponent(botonNivel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonNivelInfinito)
+                .addGap(83, 83, 83))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +198,12 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonNivel4)
+                    .addComponent(botonNivel5)
+                    .addComponent(botonNivelInfinito))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -218,6 +256,24 @@ public class PantallaEleccion extends javax.swing.JFrame {
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel3ActionPerformed
 
+    private void botonNivel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel4ActionPerformed
+        
+    }//GEN-LAST:event_botonNivel4ActionPerformed
+
+    private void botonNivel5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonNivel5ActionPerformed
+
+    private void botonNivelInfinitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivelInfinitoActionPerformed
+        mapa.setIndiceMapaActual(0); 
+        this.dispose();
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica, modoInfinito);
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        pantallaJuego.setVisible(true); 
+        PantallaEleccion.getInstancia().cerrar();
+    }//GEN-LAST:event_botonNivelInfinitoActionPerformed
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -255,6 +311,9 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private javax.swing.JButton botonNivel1;
     private javax.swing.JButton botonNivel2;
     private javax.swing.JButton botonNivel3;
+    private javax.swing.JButton botonNivel4;
+    private javax.swing.JButton botonNivel5;
+    private javax.swing.JButton botonNivelInfinito;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
