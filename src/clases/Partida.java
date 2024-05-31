@@ -89,5 +89,39 @@ public class Partida {
         }
         return 1;
     }
+    public int getMapaIDmas1()
+    {
+        try{
+            String sqlGetMapaId = "Select MapaID from partidas";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetMapaId);
+            if (rs.next()) 
+            {
+                return rs.getInt("MapaID")+1;
+            }
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+    public Boolean getSonido()
+    {
+        try{
+            String sqlGetMusica = "Select Sonido from Configuracion";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetMusica);
+            if (rs.next()) 
+            {
+                return rs.getBoolean("Sonido");
+            }
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
 

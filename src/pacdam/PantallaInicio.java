@@ -1,8 +1,13 @@
 package pacdam;
 
+import bibliotecas.Conexion;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,8 +16,23 @@ import musicas.SClip;
 public class PantallaInicio extends javax.swing.JFrame {
     private final SClip musicaInicio = new SClip("src/musicas/musicaInicio.wav");
     private boolean musica;
+    Conexion con = new Conexion();
+    Connection conet;
+    Statement st;
+    ResultSet rs;
     public PantallaInicio() {
         musica = ventanaMusica();
+        try {
+            String sqlDelete = "Delete FROM Configuracion";
+            String sql = "INSERT INTO Configuracion (Sonido) VALUES ("+musica+")";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlDelete);
+            rs = st.executeQuery(sql);
+        }
+         catch (SQLException e) {
+            e.printStackTrace();
+        }
         if (musica) 
                 musicaInicio.loop();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
