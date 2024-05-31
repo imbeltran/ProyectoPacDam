@@ -17,12 +17,15 @@ public class PantallaEleccion extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection conet;
     Statement st;
-    ResultSet rs;
     ResultSet rs2;
+    ResultSet rs3;
+    ResultSet rs4;
+    ResultSet rs5;
     
     String sqlMapa2 = "SELECT estado FROM Mapas WHERE MapaID = 1";
     String sqlMapa3 = "SELECT estado FROM Mapas WHERE MapaID = 2";
-    //String sql4 = "SELECT estado FROM Mapas WHERE MapaID = 3";
+    String sqlMapa4 = "SELECT estado FROM Mapas WHERE MapaID = 3";
+    String sqlMapa5 = "SELECT estado FROM Mapas WHERE MapaID = 4";
     
     public PantallaEleccion() {
         this.mapa = new Mapa();
@@ -37,30 +40,38 @@ public class PantallaEleccion extends javax.swing.JFrame {
         try {
             conet = con.getConnection();
             st = conet.createStatement();
-            rs = st.executeQuery(sqlMapa2);
-            if (rs.next()) {
-                boolean estado = rs.getBoolean("estado");
+            rs2 = st.executeQuery(sqlMapa2);
+            if (rs2.next()) {
+                boolean estado = rs2.getBoolean("estado");
                 if(estado)
                     botonNivel2.setEnabled(true);
                 else
                     botonNivel2.setEnabled(false);
             }
-            rs2 = st.executeQuery(sqlMapa3);
-            if (rs2.next()) {
-                boolean estado = rs2.getBoolean("estado");
+            rs3 = st.executeQuery(sqlMapa3);
+            if (rs3.next()) {
+                boolean estado = rs3.getBoolean("estado");
                 if(estado)
                     botonNivel3.setEnabled(true);
                 else
                     botonNivel3.setEnabled(false);
             }
-            /*rs = st.executeQuery(sql4);
-            if (rs.next()) {
-                boolean estado = rs.getBoolean("estado");
+            rs4 = st.executeQuery(sqlMapa4);
+            if (rs4.next()) {
+                boolean estado = rs4.getBoolean("estado");
                 if(estado)
-                {
-                    
-                }
-            }*/
+                    botonNivel4.setEnabled(true);
+                else
+                    botonNivel4.setEnabled(false);
+            }
+            rs5 = st.executeQuery(sqlMapa5);
+            if (rs5.next()) {
+                boolean estado = rs5.getBoolean("estado");
+                if(estado)
+                    botonNivel5.setEnabled(true);
+                else
+                    botonNivel5.setEnabled(false);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,6 +100,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         botonNivel2 = new javax.swing.JButton();
         botonNivel1 = new javax.swing.JButton();
         botonNivel3 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         botonNivel4 = new javax.swing.JButton();
         botonNivel5 = new javax.swing.JButton();
         botonNivelInfinito = new javax.swing.JButton();
@@ -130,13 +142,13 @@ public class PantallaEleccion extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(86, Short.MAX_VALUE)
+                .addContainerGap(93, Short.MAX_VALUE)
                 .addComponent(botonNivel1)
                 .addGap(89, 89, 89)
                 .addComponent(botonNivel2)
                 .addGap(90, 90, 90)
                 .addComponent(botonNivel3)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonNivel1, botonNivel2, botonNivel3});
@@ -151,6 +163,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
                     .addComponent(botonNivel3))
                 .addContainerGap())
         );
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
 
         botonNivel4.setText("Nivel 4");
         botonNivel4.addActionListener(new java.awt.event.ActionListener() {
@@ -173,23 +187,44 @@ public class PantallaEleccion extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(88, Short.MAX_VALUE)
+                .addComponent(botonNivel4)
+                .addGap(89, 89, 89)
+                .addComponent(botonNivel5)
+                .addGap(90, 90, 90)
+                .addComponent(botonNivelInfinito)
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonNivel4)
+                    .addComponent(botonNivel5)
+                    .addComponent(botonNivelInfinito))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(botonNivel4)
-                .addGap(92, 92, 92)
-                .addComponent(botonNivel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonNivelInfinito)
-                .addGap(83, 83, 83))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,12 +233,9 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(32, 32, 32)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonNivel4)
-                    .addComponent(botonNivel5)
-                    .addComponent(botonNivelInfinito))
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(219, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,5 +349,6 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
