@@ -16,3 +16,22 @@ Inserts:
     INSERT INTO skins (skinID, nombre, archivo) VALUES (1, 'prueba', 'prueba.jpg') //para skin de prueba
     INSERT INTO mapas (mapaID, nombre, datosmapa, estado) VALUES (1, 'MAPA1', '1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1:1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1:1,0,1,1,1,0,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1:1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1:1,0,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,1,1,0,1,0,1,0,1,0,1,1,0,1:1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1:1,0,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1,1:1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1:1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,0,1,1:1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1:1,0,1,0,1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,0,1,1,0,1:1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1:1,0,1,0,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1,1,0,1:1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1:1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1:', false)
     //Todo eso es para añadir un mapa con los datos del mapa 1 y con el booleano a false
+
+//Creacion de nuevas tablas y modificacion de las anteriores tablas
+
+    CREATE TABLE Configuracion (
+    Sonido BOOLEAN
+);
+
+    CREATE TABLE Puntuaciones (
+    Nombre VARCHAR(255),
+    Puntuacion INT
+);
+    DROP TABLE IF EXISTS Partidas;
+    DROP TABLE IF EXISTS Skins;
+    
+    CREATE TABLE Partidas (
+    PartidaID INT PRIMARY KEY,
+    MapaID INT NOT NULL,
+    SkinID INT NOT NULL
+);
