@@ -22,11 +22,11 @@ public class Partida {
    
     
     
-    public boolean crearPartida()
+    public boolean crearPartida(int skin)
     {
         try {
             String sqlDelete = "Delete from partidas where partidaID = "+getPartidaID();
-            String sqlInsert = "INSERT INTO Partidas (PartidaID, MapaID, SkinID) VALUES ("+getPartidaIDMas1()+",1,1)";
+            String sqlInsert = "INSERT INTO Partidas (PartidaID, MapaID, SkinID) VALUES ("+getPartidaIDMas1()+",1,"+skin+")";
             conet = con.getConnection();
             st = conet.createStatement();
             rs = st.executeQuery(sqlDelete);
@@ -122,6 +122,23 @@ public class Partida {
             e.printStackTrace();
         }
         return false;
+    }
+    public int getSkinID()
+    {
+        try{
+            String sqlGetSkinId = "Select SkinId from partidas";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetSkinId);
+            if (rs.next()) 
+            {
+                return rs.getInt("SkinId");
+            }
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
 

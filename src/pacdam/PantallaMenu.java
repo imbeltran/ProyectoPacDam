@@ -149,6 +149,11 @@ public class PantallaMenu extends javax.swing.JFrame {
         BotonDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechder.png"))); // NOI18N
 
         skin.setBackground(new java.awt.Color(0, 0, 0));
+        skin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skinActionPerformed(evt);
+            }
+        });
 
         BotonIzq.setBackground(new java.awt.Color(0, 0, 0));
         BotonIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechizq.png"))); // NOI18N
@@ -254,7 +259,7 @@ public class PantallaMenu extends javax.swing.JFrame {
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         Partida pa = new Partida();
-        pa.crearPartida();
+        pa.crearPartida(currentIndex);
         p.setVisible(true);
         this.dispose();
         musicaMenu.stop();
@@ -274,6 +279,10 @@ public class PantallaMenu extends javax.swing.JFrame {
     private void botonSkinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSkinsActionPerformed
         panelSkins.setVisible(!panelSkins.isVisible());
     }//GEN-LAST:event_botonSkinsActionPerformed
+
+    private void skinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_skinActionPerformed
 
     /**
      * @param args the command line arguments
