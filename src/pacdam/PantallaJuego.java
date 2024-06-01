@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import clases.PacMan;
+import clases.Partida;
 import java.awt.Color;
 import static java.awt.Color.RED;
 import java.awt.Component;
@@ -47,6 +48,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     private List<FantasmaNaranja> fantasmasNaranjas;
     private List<Timer> timers;
     private boolean modoInfinito;
+    Partida p = new Partida();
 
     public PantallaJuego(Mapa mapa) {
         this.setSize(1500, 750); // Establece las dimensiones deseadas
@@ -81,6 +83,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.mapa = mapa;
         this.musica = musica;
         this.pantallaJuego = pantallaJuego;
+        //this.labelNivel.setText("Nivel: "+p.getMapaName()); hay que mirar por que no va
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
         panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
@@ -162,17 +165,19 @@ public class PantallaJuego extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
-                    panelPacMan.mover();
+                    panelPacMan.mover(irBorracho);
                     int posX = panelPacMan.getPosX() / 50;
                     int posY = panelPacMan.getPosY() / 50;
                     // Comprueba si Pacman está en una celda con una cerveza
                     if (datosMapa[posY][posX] == 2) {
                         irBorracho = true;
+                        panelPacMan.mover(irBorracho);
                         // Inicia un temporizador para desactivar la cerveza después de 5 segundos
                         new Timer(5000, new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 irBorracho = false;
+                                panelPacMan.mover(irBorracho);
                             }
                         }).start();
                         // Cambia el valor en el mapa para que la cerveza no se vuelva a activar
@@ -210,18 +215,20 @@ public class PantallaJuego extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (!panelPacMan.getPausado()) {
-                panelPacMan.mover();
+                panelPacMan.mover(irBorracho);
                 verificarPuntos();
                 int posX = panelPacMan.getPosX() / 50;
                 int posY = panelPacMan.getPosY() / 50;
                 // Comprueba si Pacman está en una celda con una cerveza
                 if (datosMapa[posY][posX] == 2) {
                     irBorracho = true;
+                    
                     // Inicia un temporizador para desactivar la cerveza después de 5 segundos
                     new Timer(5000, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             irBorracho = false;
+                            panelPacMan.mover(irBorracho);
                         }
                     }).start();
                     // Cambia el valor en el mapa para que la cerveza no se vuelva a activar
@@ -263,8 +270,8 @@ public class PantallaJuego extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
-                    panelFantasmaNaranja.mover();
-                    panelFantasmaAzul.mover();
+                    panelFantasmaNaranja.mover(irBorracho);
+                    panelFantasmaAzul.mover(irBorracho);
                 }
             }
         });
@@ -276,7 +283,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
-                    panelFantasmaRojo.mover();
+                    panelFantasmaRojo.mover(irBorracho);
                 }
             }
         });
@@ -289,7 +296,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (!panelPacMan.getPausado()) {
                     for (FantasmaNaranja fantasmaNaranja : fantasmasNaranjas) {
-                        fantasmaNaranja.mover();
+                        fantasmaNaranja.mover(irBorracho);
                     }
                 }
             }
@@ -428,6 +435,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         mapaPanel = new javax.swing.JPanel();
         panelPuntuacion = new javax.swing.JPanel();
         labelPuntuacion = new javax.swing.JLabel();
+        labelNivel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -439,6 +447,8 @@ public class PantallaJuego extends javax.swing.JFrame {
         labelPuntuacion.setForeground(new java.awt.Color(255, 255, 0));
         labelPuntuacion.setText("Puntuación: ");
 
+        labelNivel.setText("jLabel1");
+
         javax.swing.GroupLayout panelPuntuacionLayout = new javax.swing.GroupLayout(panelPuntuacion);
         panelPuntuacion.setLayout(panelPuntuacionLayout);
         panelPuntuacionLayout.setHorizontalGroup(
@@ -446,13 +456,17 @@ public class PantallaJuego extends javax.swing.JFrame {
             .addGroup(panelPuntuacionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(labelNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         panelPuntuacionLayout.setVerticalGroup(
             panelPuntuacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelPuntuacionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelPuntuacion)
+                .addGroup(panelPuntuacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPuntuacion)
+                    .addComponent(labelNivel))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -462,7 +476,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mapaPanelLayout.createSequentialGroup()
                 .addComponent(panelPuntuacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 404, Short.MAX_VALUE))
+                .addGap(0, 300, Short.MAX_VALUE))
         );
         mapaPanelLayout.setVerticalGroup(
             mapaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,6 +510,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel labelNivel;
     private javax.swing.JLabel labelPuntuacion;
     private javax.swing.JPanel mapaPanel;
     private javax.swing.JPanel panelPuntuacion;

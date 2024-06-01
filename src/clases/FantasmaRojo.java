@@ -35,6 +35,16 @@ public class FantasmaRojo extends javax.swing.JPanel {
     private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoSS.png")).getImage();
     private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoD.png")).getImage();
     private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRojo/RojoDD.png")).getImage();
+    
+    private Image imagenAbiertaWB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoW.png")).getImage();
+    private Image imagenCerradaWB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoWW.png")).getImage();
+    private Image imagenAbiertaAB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoA.png")).getImage();
+    private Image imagenCerradaAB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoAA.png")).getImage();
+    private Image imagenAbiertaSB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoS.png")).getImage();
+    private Image imagenCerradaSB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoSS.png")).getImage();
+    private Image imagenAbiertaDB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoD.png")).getImage();
+    private Image imagenCerradaDB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoDD.png")).getImage();
+    
     private Image imagenActual = imagenAbiertaD;
     private boolean bocaAbierta = true;
     private Mapa mapas;
@@ -50,7 +60,7 @@ public class FantasmaRojo extends javax.swing.JPanel {
     private boolean movedBackwards = false;
     private PacMan pacman;
     private int origenX, origenY;
-    
+    private boolean borracho;
     
     
     public FantasmaRojo(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, PacMan pacman) {
@@ -127,70 +137,109 @@ public class FantasmaRojo extends javax.swing.JPanel {
     }*/
     
    private void cambiarDireccion() {
-    int pacmanX = pacman.getPosX();
-    int pacmanY = pacman.getPosY();
+        int pacmanX = pacman.getPosX();
+        int pacmanY = pacman.getPosY();
 
-    // Calcula la dirección hacia Pacman
-    int newDx = (pacmanX > x) ? 50 : (pacmanX < x) ? -50 : 0;
-    int newDy = (pacmanY > y) ? 50 : (pacmanY < y) ? -50 : 0;
+        // Calcula la dirección hacia Pacman
+        int newDx = (pacmanX > x) ? 50 : (pacmanX < x) ? -50 : 0;
+        int newDy = (pacmanY > y) ? 50 : (pacmanY < y) ? -50 : 0;
 
-    // Comprueba si el fantasma puede moverse en la dirección de Pacman
-    if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50)) {
-        dx = newDx;
-        dy = newDy;
-    } else {
-        // Si no puede moverse directamente hacia Pacman, intenta moverse en una dirección aleatoria
-        int[] direcciones = {-50, 0, 50};
-        Random rand = new Random();
-        do {
-            dx = direcciones[rand.nextInt(3)];
-            dy = direcciones[rand.nextInt(3)];
-        } while (!mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50));
+        // Comprueba si el fantasma puede moverse en la dirección de Pacman
+        if (mapas.puedeMoverse((x + newDx) / 50, (y + newDy) / 50)) {
+            dx = newDx;
+            dy = newDy;
+        } else {
+            // Si no puede moverse directamente hacia Pacman, intenta moverse en una dirección aleatoria
+            int[] direcciones = {-50, 0, 50};
+            Random rand = new Random();
+            do {
+                dx = direcciones[rand.nextInt(3)];
+                dy = direcciones[rand.nextInt(3)];
+            } while (!mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50));
+        }
+        actualizarDireccion();
     }
-}
 
-public void mover() {
-    // Comprueba si el fantasma puede cambiar de dirección en cada paso
-    cambiarDireccion();
-    if (mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
-        x += dx;
-        y += dy;
+   private void actualizarDireccion() {
+        arriba = (dy == -50);
+        abajo = (dy == 50);
+        izquierda = (dx == -50);
+        derecha = (dx == 50);
     }
-    
-    this.setBounds(x, y, this.getWidth(), this.getHeight());
-    comprobarImagen();
-    repaint();
-    System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
-}
+   
+   public void mover(Boolean borracho) {
+        this.borracho = borracho;
+        // Comprueba si el fantasma puede cambiar de dirección en cada paso
+        cambiarDireccion();
+        if (mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
+            x += dx;
+            y += dy;
+        }
+
+        this.setBounds(x, y, this.getWidth(), this.getHeight());
+        comprobarImagen();
+        repaint();
+        System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+    }
 
         
     public void comprobarImagen(){
-        if (bocaAbierta && arriba) {
+        if (!borracho)
+        {
+            if (bocaAbierta && arriba) {
             imagenActual = imagenCerradaW;
-        } else {
-            if (!bocaAbierta && arriba) 
-                imagenActual = imagenAbiertaW;
+            } else {
+                if (!bocaAbierta && arriba) 
+                    imagenActual = imagenAbiertaW;
+            }
+            if (bocaAbierta && abajo) {
+                imagenActual = imagenCerradaS;
+            } else {
+                if (!bocaAbierta && abajo) 
+                    imagenActual = imagenAbiertaS;
+            }
+            if (bocaAbierta && derecha) {
+                imagenActual = imagenCerradaD;
+            } else {
+                if (!bocaAbierta && derecha) 
+                    imagenActual = imagenAbiertaD;
+            }
+            if (bocaAbierta && izquierda) {
+                imagenActual = imagenCerradaA;
+            } else {
+                if (!bocaAbierta && izquierda) 
+                    imagenActual = imagenAbiertaA;
+            }
+            bocaAbierta = !bocaAbierta;
+            repaint();
+        }else{
+            if (bocaAbierta && arriba) {
+            imagenActual = imagenCerradaWB;
+            } else {
+                if (!bocaAbierta && arriba) 
+                    imagenActual = imagenAbiertaWB;
+            }
+            if (bocaAbierta && abajo) {
+                imagenActual = imagenCerradaSB;
+            } else {
+                if (!bocaAbierta && abajo) 
+                    imagenActual = imagenAbiertaSB;
+            }
+            if (bocaAbierta && derecha) {
+                imagenActual = imagenCerradaDB;
+            } else {
+                if (!bocaAbierta && derecha) 
+                    imagenActual = imagenAbiertaDB;
+            }
+            if (bocaAbierta && izquierda) {
+                imagenActual = imagenCerradaAB;
+            } else {
+                if (!bocaAbierta && izquierda) 
+                    imagenActual = imagenAbiertaAB;
+            }
+            bocaAbierta = !bocaAbierta;
+            repaint();
         }
-        if (bocaAbierta && abajo) {
-            imagenActual = imagenCerradaS;
-        } else {
-            if (!bocaAbierta && abajo) 
-                imagenActual = imagenAbiertaS;
-        }
-        if (bocaAbierta && derecha) {
-            imagenActual = imagenCerradaD;
-        } else {
-            if (!bocaAbierta && derecha) 
-                imagenActual = imagenAbiertaD;
-        }
-        if (bocaAbierta && izquierda) {
-            imagenActual = imagenCerradaA;
-        } else {
-            if (!bocaAbierta && izquierda) 
-                imagenActual = imagenAbiertaA;
-        }
-        bocaAbierta = !bocaAbierta;
-        repaint();
     }
     
     public int getPosX() {

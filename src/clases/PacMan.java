@@ -32,6 +32,15 @@ public class PacMan extends javax.swing.JPanel {
     private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMss.png")).getImage();
     private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMd.png")).getImage();
     private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMdd.png")).getImage();
+    
+    private Image imagenAbiertaWB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMwBorracho.png")).getImage();
+    private Image imagenCerradaWB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMwwBorracho.png")).getImage();
+    private Image imagenAbiertaAB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMaBorracho.png")).getImage();
+    private Image imagenCerradaAB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMaaBorracho.png")).getImage();
+    private Image imagenAbiertaSB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMsBorracho.png")).getImage();
+    private Image imagenCerradaSB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMssBorracho.png")).getImage();
+    private Image imagenAbiertaDB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMdBorracho.png")).getImage();
+    private Image imagenCerradaDB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMddBorracho.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
     private boolean bocaAbierta = true;
     private Mapa mapas;
@@ -51,6 +60,7 @@ public class PacMan extends javax.swing.JPanel {
     private boolean nuevaAbajo = false;
     private boolean nuevaIzquierda = false;
     private boolean nuevaDerecha = false;
+    private boolean borracho = false;
 
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
@@ -133,10 +143,10 @@ public class PacMan extends javax.swing.JPanel {
         g.drawImage(imagenActual, 0, 0, this.getWidth(), this.getHeight(), this);
     }
     
-    public void mover() {
+    public void mover(Boolean borracho) {
         int nuevaX = x;
         int nuevaY = y;
-
+        this.borracho = borracho;
         if (escape && !pausado) {
             pausarJuego();
         }
@@ -210,35 +220,65 @@ public class PacMan extends javax.swing.JPanel {
             comprobarImagen();
         }
     }
-
+    
     
     public void comprobarImagen(){
-        if (bocaAbierta && arriba) {
+        if (!borracho)
+        {
+            if (bocaAbierta && arriba) {
             imagenActual = imagenCerradaW;
-        } else {
-            if (!bocaAbierta && arriba) 
-                imagenActual = imagenAbiertaW;
+            } else {
+                if (!bocaAbierta && arriba) 
+                    imagenActual = imagenAbiertaW;
+            }
+            if (bocaAbierta && abajo) {
+                imagenActual = imagenCerradaS;
+            } else {
+                if (!bocaAbierta && abajo) 
+                    imagenActual = imagenAbiertaS;
+            }
+            if (bocaAbierta && derecha) {
+                imagenActual = imagenCerradaD;
+            } else {
+                if (!bocaAbierta && derecha) 
+                    imagenActual = imagenAbiertaD;
+            }
+            if (bocaAbierta && izquierda) {
+                imagenActual = imagenCerradaA;
+            } else {
+                if (!bocaAbierta && izquierda) 
+                    imagenActual = imagenAbiertaA;
+            }
+            bocaAbierta = !bocaAbierta;
+            repaint();
+        }else{
+            if (bocaAbierta && arriba) {
+            imagenActual = imagenCerradaWB;
+            } else {
+                if (!bocaAbierta && arriba) 
+                    imagenActual = imagenAbiertaWB;
+            }
+            if (bocaAbierta && abajo) {
+                imagenActual = imagenCerradaSB;
+            } else {
+                if (!bocaAbierta && abajo) 
+                    imagenActual = imagenAbiertaSB;
+            }
+            if (bocaAbierta && derecha) {
+                imagenActual = imagenCerradaDB;
+            } else {
+                if (!bocaAbierta && derecha) 
+                    imagenActual = imagenAbiertaDB;
+            }
+            if (bocaAbierta && izquierda) {
+                imagenActual = imagenCerradaAB;
+            } else {
+                if (!bocaAbierta && izquierda) 
+                    imagenActual = imagenAbiertaAB;
+            }
+            bocaAbierta = !bocaAbierta;
+            repaint();
         }
-        if (bocaAbierta && abajo) {
-            imagenActual = imagenCerradaS;
-        } else {
-            if (!bocaAbierta && abajo) 
-                imagenActual = imagenAbiertaS;
-        }
-        if (bocaAbierta && derecha) {
-            imagenActual = imagenCerradaD;
-        } else {
-            if (!bocaAbierta && derecha) 
-                imagenActual = imagenAbiertaD;
-        }
-        if (bocaAbierta && izquierda) {
-            imagenActual = imagenCerradaA;
-        } else {
-            if (!bocaAbierta && izquierda) 
-                imagenActual = imagenAbiertaA;
-        }
-        bocaAbierta = !bocaAbierta;
-        repaint();
     }
     
     public int getPosX() {
@@ -328,7 +368,7 @@ public class PacMan extends javax.swing.JPanel {
         }
         return false;
     }
-
+    
 
 
         

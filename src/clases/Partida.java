@@ -106,6 +106,23 @@ public class Partida {
         }
         return 1;
     }
+    public String getMapaName()
+    {
+        try{
+            String sqlGetMapaName = "Select Nombre from Mapas m, Partidas p where m.MapaID = p.MapaID";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetMapaName);
+            if (rs.next()) 
+            {
+                return rs.getString("Nombre");
+            }
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return "";
+    }
     public Boolean getSonido()
     {
         try{
