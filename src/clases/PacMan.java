@@ -24,6 +24,8 @@ public class PacMan extends javax.swing.JPanel {
     private boolean escape = false;
     final int velocidad = 10; 
     private boolean pausado = false;
+    // <editor-fold defaultstate="collapsed" desc="Declaracion Skins">
+    //normal
     private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMw.png")).getImage();
     private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMww.png")).getImage();
     private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMa.png")).getImage();
@@ -32,7 +34,7 @@ public class PacMan extends javax.swing.JPanel {
     private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMss.png")).getImage();
     private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMd.png")).getImage();
     private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/PacDam/PacDAMdd.png")).getImage();
-    
+    //normal borracho
     private Image imagenAbiertaWB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMwBorracho.png")).getImage();
     private Image imagenCerradaWB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMwwBorracho.png")).getImage();
     private Image imagenAbiertaAB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMaBorracho.png")).getImage();
@@ -41,7 +43,26 @@ public class PacMan extends javax.swing.JPanel {
     private Image imagenCerradaSB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMssBorracho.png")).getImage();
     private Image imagenAbiertaDB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMdBorracho.png")).getImage();
     private Image imagenCerradaDB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Borracho/PacDAMddBorracho.png")).getImage();
+    //dientes
+    private Image imagenAbiertaWDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesW.png")).getImage();
+    private Image imagenCerradaWDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesWW.png")).getImage();
+    private Image imagenAbiertaADi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesA.png")).getImage();
+    private Image imagenCerradaADi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesAA.png")).getImage();
+    private Image imagenAbiertaSDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesS.png")).getImage();
+    private Image imagenCerradaSDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesSS.png")).getImage();
+    private Image imagenAbiertaDDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesD.png")).getImage();
+    private Image imagenCerradaDDi = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/pacmandientesDD.png")).getImage();
+    //dientes borracho
+    private Image imagenAbiertaWDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesW.png")).getImage();
+    private Image imagenCerradaWDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesWW.png")).getImage();
+    private Image imagenAbiertaADiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesA.png")).getImage();
+    private Image imagenCerradaADiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesAA.png")).getImage();
+    private Image imagenAbiertaSDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesS.png")).getImage();
+    private Image imagenCerradaSDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesSS.png")).getImage();
+    private Image imagenAbiertaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesD.png")).getImage();
+    private Image imagenCerradaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesDD.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
+    // </editor-fold>
     private boolean bocaAbierta = true;
     private Mapa mapas;
     private int[][] mapa;
@@ -54,14 +75,14 @@ public class PacMan extends javax.swing.JPanel {
     private boolean cambiandoDireccion = false;
     private Timer timer;
     private boolean win;
-    
-    //añadido nuevo 
+
     private boolean nuevaArriba = false;
     private boolean nuevaAbajo = false;
     private boolean nuevaIzquierda = false;
     private boolean nuevaDerecha = false;
     private boolean borracho = false;
 
+    private Partida p = new Partida();
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
         initComponents();
@@ -223,61 +244,127 @@ public class PacMan extends javax.swing.JPanel {
     
     
     public void comprobarImagen(){
-        if (!borracho)
-        {
-            if (bocaAbierta && arriba) {
-            imagenActual = imagenCerradaW;
-            } else {
-                if (!bocaAbierta && arriba) 
-                    imagenActual = imagenAbiertaW;
+        int skin = p.getSkinID();
+        switch (skin) {
+        case 1:
+            if (!borracho)
+            {
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWDi;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWDi;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSDi;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSDi;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDDi;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDDi;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaADi;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaADi;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            }else{
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWDiB;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWDiB;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSDiB;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSDiB;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDDiB;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDDiB;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaADiB;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaADiB;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            break;
+        }
+        case 2: 
+            
+            break;
+        default: 
+            if (!borracho)
+            {
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaW;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaW;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaS;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaS;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaD;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaD;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaA;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaA;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            }else{
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWB;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWB;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSB;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSB;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDB;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDB;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaAB;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaAB;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
             }
-            if (bocaAbierta && abajo) {
-                imagenActual = imagenCerradaS;
-            } else {
-                if (!bocaAbierta && abajo) 
-                    imagenActual = imagenAbiertaS;
-            }
-            if (bocaAbierta && derecha) {
-                imagenActual = imagenCerradaD;
-            } else {
-                if (!bocaAbierta && derecha) 
-                    imagenActual = imagenAbiertaD;
-            }
-            if (bocaAbierta && izquierda) {
-                imagenActual = imagenCerradaA;
-            } else {
-                if (!bocaAbierta && izquierda) 
-                    imagenActual = imagenAbiertaA;
-            }
-            bocaAbierta = !bocaAbierta;
-            repaint();
-        }else{
-            if (bocaAbierta && arriba) {
-            imagenActual = imagenCerradaWB;
-            } else {
-                if (!bocaAbierta && arriba) 
-                    imagenActual = imagenAbiertaWB;
-            }
-            if (bocaAbierta && abajo) {
-                imagenActual = imagenCerradaSB;
-            } else {
-                if (!bocaAbierta && abajo) 
-                    imagenActual = imagenAbiertaSB;
-            }
-            if (bocaAbierta && derecha) {
-                imagenActual = imagenCerradaDB;
-            } else {
-                if (!bocaAbierta && derecha) 
-                    imagenActual = imagenAbiertaDB;
-            }
-            if (bocaAbierta && izquierda) {
-                imagenActual = imagenCerradaAB;
-            } else {
-                if (!bocaAbierta && izquierda) 
-                    imagenActual = imagenAbiertaAB;
-            }
-            bocaAbierta = !bocaAbierta;
-            repaint();
+            break;
         }
     }
     
