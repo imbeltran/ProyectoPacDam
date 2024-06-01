@@ -189,6 +189,24 @@ public class Partida {
         }
     }
     
+    public int getPuntuacionInfinito()
+    {
+        try{
+            String sqlGetPuntuacionInfinito = "Select nivelinfinito from mapas where mapaID = 1";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetPuntuacionInfinito);
+            if (rs.next()) 
+            {
+                return rs.getInt("nivelinfinito");
+            }
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+    
     
     
    /*/pruebas

@@ -222,20 +222,18 @@ public class PacMan extends javax.swing.JPanel {
                 }
             }
 
-            if (puntuacion == mapas.getPuntuacionTotal()) {
-                if (pantallaJuego.getModoInfinito()){
-                    
+            if (puntuacion >= 50/*mapas.getPuntuacionTotal()*/) {
+                System.out.println(pantallaJuego.getModoInfinito());
+                if (pantallaJuego.getModoInfinito()) {
+                    // Si está en modo infinito, reinicia el nivel sin mostrar las pantallas finales
+                    pantallaJuego.reiniciarJuegoModoInfinito();
                 } else {
+                    // Si no está en modo infinito, entonces muestra la pantalla de fin y elección
                     System.out.println("¡Felicidades! Te has pasado el nivel.");
-                pantallaJuego.detenerTimers();
-                pantallaJuego.borrarPaneles();
-                pantallaJuego.dispose();
-                win = true;
-                PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapas, musica);
-                pantallaFin.setVisible(true);
-                PantallaEleccion.getInstancia().setVisible(true);
+                    pantallaJuego.finalizarJuego();
+                    
+                }
                 puntuacion = 0;
-                }               
             }
 
             comprobarImagen();
@@ -417,6 +415,7 @@ public class PacMan extends javax.swing.JPanel {
             }
         }
     }
+    
 
     public boolean isMusica() {
         return musica;

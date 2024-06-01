@@ -179,7 +179,7 @@ public class FantasmaRojo extends javax.swing.JPanel {
         this.setBounds(x, y, this.getWidth(), this.getHeight());
         comprobarImagen();
         repaint();
-        System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+        //System.out.println("Posicion de fantasmaRojo en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
     }
 
         

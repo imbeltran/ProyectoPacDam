@@ -67,20 +67,20 @@ public class Mapa {
     
     public boolean puedeMoverse(int x, int y){
         if (mapas == null) {
-            System.out.println("nulo");
+            //System.out.println("nulo");
             return false;
         }
         int[][] mapaActual = mapas.get(indiceMapaActual);
         if (mapaActual == null) {
-            System.out.println("nulo2");
+            //System.out.println("nulo2");
             return false;
         }
         if (y < 0 || y >= mapaActual[0].length || x < 0 || x >= mapaActual[0].length) {
-            System.out.println("mapa fuera de rango");
+            //System.out.println("mapa fuera de rango");
             return false;
         }
         if (mapaActual[y][x] == 1){
-            System.out.println("muro");
+            //System.out.println("muro");
             return false;
         }
         return true;
