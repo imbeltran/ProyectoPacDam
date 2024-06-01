@@ -175,6 +175,19 @@ public class Partida {
             e.printStackTrace();
         }
     }
+    public void setEstado(Boolean win)
+    {
+        try{
+            String sqlSetSkinId = "UPDATE Mapas SET Estado = "+win + " where MapaId = "+getMapaID();
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlSetSkinId);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
     
     
     
