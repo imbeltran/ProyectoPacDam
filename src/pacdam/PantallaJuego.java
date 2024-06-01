@@ -321,10 +321,23 @@ public class PantallaJuego extends javax.swing.JFrame {
                     panel.setBackground(Color.BLACK);
                 } else if (datosMapa[i][j] == 2) {
                     panel.setBackground(new Color(0, 0, 153));
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/cerveza.png"));
-                    JLabel cerveza = new JLabel(icon);
-                    cerveza.setBounds(20, 20, 20, 20);
-                    panel.add(cerveza);
+                    int skin = p.getSkinID();
+                    switch (skin) {
+                    case 1:
+                        ImageIcon iconMachete = new ImageIcon(getClass().getResource("/imagenes/machete.png"));
+                        JLabel Machete = new JLabel(iconMachete);
+                        Machete.setBounds(20, 20, 20, 20);
+                        panel.add(Machete);
+                        break;
+                    case 2:
+                        break;
+                    default: 
+                        ImageIcon iconCerveza = new ImageIcon(getClass().getResource("/imagenes/cerveza.png"));
+                        JLabel cerveza = new JLabel(iconCerveza);
+                        cerveza.setBounds(20, 20, 20, 20);
+                        panel.add(cerveza);
+                        break;
+                    }
                 } else {
                     panel.setBackground(new Color(0, 0, 153));
                     ImageIcon icon = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png"));
