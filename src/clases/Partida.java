@@ -5,6 +5,11 @@
 package clases;
 
 import bibliotecas.Conexion;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,11 +27,11 @@ public class Partida {
    
     
     
-    public boolean crearPartida(int skin)
+    public boolean crearPartida()
     {
         try {
             String sqlDelete = "Delete from partidas where partidaID = "+getPartidaID();
-            String sqlInsert = "INSERT INTO Partidas (PartidaID, MapaID, SkinID) VALUES ("+getPartidaIDMas1()+",1,"+skin+")";
+            String sqlInsert = "INSERT INTO Partidas (PartidaID, MapaID, SkinID) VALUES ("+getPartidaIDMas1()+",1,0)";
             conet = con.getConnection();
             st = conet.createStatement();
             rs = st.executeQuery(sqlDelete);
@@ -157,5 +162,67 @@ public class Partida {
         }
         return 0;
     }
+    public void setSkinID(int Id)
+    {
+        try{
+            String sqlSetSkinId = "UPDATE Partidas SET SkinID = "+Id;
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlSetSkinId);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+   /*/pruebas
+    
+    public void saveGame(int partidaGuardadaID, int partidaID, int mapaID, int puntuacion, int pacmanX, int pacmanY, int[][] mapa, Connection connection) throws SQLException, IOException {
+        String sql = "INSERT INTO PartidaGuardada (PartidaGuardadaID, PartidaID, MapaID, Puntuacion, PosicionPacManX, PosicionPacManY, MapaEstado) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, partidaGuardadaID);
+        preparedStatement.setInt(2, partidaID);
+        preparedStatement.setInt(3, mapaID);
+        preparedStatement.setInt(4, puntuacion);
+        preparedStatement.setInt(5, pacmanX);
+        preparedStatement.setInt(6, pacmanY);
+        preparedStatement.setBytes(7, serializeMap(mapa));
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+    
+    public byte[] serializeMap(int[][] map) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(map);
+        objectOutputStream.flush();
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        objectOutputStream.close();
+        return byteArray;
+    }
+    public int[][] deserializeMap(byte[] byteArray) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        int[][] map = (int[][]) objectInputStream.readObject();
+        objectInputStream.close();
+        return map;
+    }
+    public int[][] loadGameMap(int partidaGuardadaID, Connection connection) throws SQLException, IOException, ClassNotFoundException {
+        String sql = "SELECT MapaEstado FROM PartidaGuardada WHERE PartidaGuardadaID = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, partidaGuardadaID);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        int[][] mapa = null;
+        if (resultSet.next()) {
+            byte[] mapaBytes = resultSet.getBytes("MapaEstado");
+            mapa = deserializeMap(mapaBytes);
+        }
+        resultSet.close();
+        preparedStatement.close();
+        return mapa;
+    }*/
 }
 

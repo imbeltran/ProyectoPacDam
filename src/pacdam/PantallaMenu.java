@@ -13,13 +13,7 @@ import musicas.SClip;
 public class PantallaMenu extends javax.swing.JFrame {
     private final SClip musicaMenu = new SClip("src/musicas/pacman.wav");
     private boolean musica;
-    private int currentIndex;
     
-    ImageIcon[] skins = {
-            new ImageIcon(getClass().getResource("/imagenes/skins/PacDAM_1.gif")),
-            new ImageIcon(getClass().getResource("/imagenes/skins/PacDAMDientes.gif")),
-            new ImageIcon(getClass().getResource("/imagenes/skins/Vagfum.gif"))
-        };
     public PantallaMenu() {
        musicaMenu.loop();
         initComponents();
@@ -32,29 +26,10 @@ public class PantallaMenu extends javax.swing.JFrame {
         {
             musicaMenu.loop();
         }
-        panelSkins.setVisible(false);
-        this.currentIndex = 0;
-        skin.setIcon(skins[currentIndex]);
-        BotonIzq.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentIndex = (currentIndex - 1 + skins.length) % skins.length;
-                updateSkin();
-            }
-        });
-
-        BotonDer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                currentIndex = (currentIndex + 1) % skins.length;
-                updateSkin();
-            }
-        });
+        
     }
     
-    private void updateSkin() {
-        skin.setIcon(skins[currentIndex]);
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,12 +46,6 @@ public class PantallaMenu extends javax.swing.JFrame {
         botonCargarPartida = new javax.swing.JButton();
         botonNuevaPartida = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        botonSkins = new javax.swing.JButton();
-        panelSkins = new javax.swing.JPanel();
-        BotonDer = new javax.swing.JButton();
-        skin = new javax.swing.JButton();
-        BotonIzq = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -135,81 +104,6 @@ public class PantallaMenu extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PAC-DAM");
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
-
-        botonSkins.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonSkinsActionPerformed(evt);
-            }
-        });
-
-        panelSkins.setBackground(new java.awt.Color(0, 0, 0));
-
-        BotonDer.setBackground(new java.awt.Color(0, 0, 0));
-        BotonDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechder.png"))); // NOI18N
-
-        skin.setBackground(new java.awt.Color(0, 0, 0));
-        skin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                skinActionPerformed(evt);
-            }
-        });
-
-        BotonIzq.setBackground(new java.awt.Color(0, 0, 0));
-        BotonIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechizq.png"))); // NOI18N
-
-        javax.swing.GroupLayout panelSkinsLayout = new javax.swing.GroupLayout(panelSkins);
-        panelSkins.setLayout(panelSkinsLayout);
-        panelSkinsLayout.setHorizontalGroup(
-            panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSkinsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BotonIzq)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-                .addComponent(skin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(193, 193, 193)
-                .addComponent(BotonDer)
-                .addContainerGap())
-        );
-        panelSkinsLayout.setVerticalGroup(
-            panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSkinsLayout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addGroup(panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSkinsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BotonDer, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BotonIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))
-                    .addComponent(skin, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(110, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panelSkins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(243, 243, 243)
-                .addComponent(botonSkins, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(botonSkins, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(panelSkins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50))))
-        );
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -217,9 +111,7 @@ public class PantallaMenu extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -229,9 +121,7 @@ public class PantallaMenu extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(529, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -259,7 +149,7 @@ public class PantallaMenu extends javax.swing.JFrame {
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         Partida pa = new Partida();
-        pa.crearPartida(currentIndex);
+        pa.crearPartida();
         p.setVisible(true);
         this.dispose();
         musicaMenu.stop();
@@ -275,14 +165,6 @@ public class PantallaMenu extends javax.swing.JFrame {
     private void botonSalirDelJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirDelJuegoActionPerformed
         this.dispose();
     }//GEN-LAST:event_botonSalirDelJuegoActionPerformed
-
-    private void botonSkinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSkinsActionPerformed
-        panelSkins.setVisible(!panelSkins.isVisible());
-    }//GEN-LAST:event_botonSkinsActionPerformed
-
-    private void skinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_skinActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,17 +202,11 @@ public class PantallaMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonDer;
-    private javax.swing.JButton BotonIzq;
     private javax.swing.JButton botonCargarPartida;
     private javax.swing.JButton botonNuevaPartida;
     private javax.swing.JButton botonSalirDelJuego;
-    private javax.swing.JButton botonSkins;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel panelSkins;
-    private javax.swing.JButton skin;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,10 +2,14 @@ package pacdam;
 
 import bibliotecas.Conexion;
 import clases.Mapa;
+import clases.Partida;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class PantallaEleccion extends javax.swing.JFrame {
@@ -26,6 +30,14 @@ public class PantallaEleccion extends javax.swing.JFrame {
     String sqlMapa3 = "SELECT estado FROM Mapas WHERE MapaID = 2";
     String sqlMapa4 = "SELECT estado FROM Mapas WHERE MapaID = 3";
     String sqlMapa5 = "SELECT estado FROM Mapas WHERE MapaID = 4";
+    
+    Partida pa = new Partida();
+    private int currentIndex;
+    ImageIcon[] skins = {
+            new ImageIcon(getClass().getResource("/imagenes/skins/PacDAM_1.gif")),
+            new ImageIcon(getClass().getResource("/imagenes/skins/PacDAMDientes.gif")),
+            new ImageIcon(getClass().getResource("/imagenes/skins/Vagfum.gif"))
+        };
     
     public PantallaEleccion() {
         this.mapa = new Mapa();
@@ -75,8 +87,33 @@ public class PantallaEleccion extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        //panel skins
+        panelSkins.setVisible(false);
+        this.currentIndex = 0;
+        skin.setIcon(skins[currentIndex]);
+        BotonIzq.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentIndex = (currentIndex - 1 + skins.length) % skins.length;
+                updateSkin();
+            }
+        });
+
+        BotonDer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentIndex = (currentIndex + 1) % skins.length;
+                updateSkin();
+            }
+        });
     }
     
+    private void updateSkin() {
+        skin.setIcon(skins[currentIndex]);
+        pa.setSkinID(currentIndex);
+        System.out.println(currentIndex);
+    }
     
     public static PantallaEleccion getInstancia() {
         if (instancia == null) {
@@ -104,6 +141,12 @@ public class PantallaEleccion extends javax.swing.JFrame {
         botonNivel4 = new javax.swing.JButton();
         botonNivel5 = new javax.swing.JButton();
         botonNivelInfinito = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        botonSkins = new javax.swing.JButton();
+        panelSkins = new javax.swing.JPanel();
+        BotonDer = new javax.swing.JButton();
+        skin = new javax.swing.JButton();
+        BotonIzq = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -142,13 +185,13 @@ public class PantallaEleccion extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(93, Short.MAX_VALUE)
+                .addContainerGap(546, Short.MAX_VALUE)
                 .addComponent(botonNivel1)
                 .addGap(89, 89, 89)
                 .addComponent(botonNivel2)
                 .addGap(90, 90, 90)
                 .addComponent(botonNivel3)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(547, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {botonNivel1, botonNivel2, botonNivel3});
@@ -192,13 +235,13 @@ public class PantallaEleccion extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addContainerGap(541, Short.MAX_VALUE)
                 .addComponent(botonNivel4)
                 .addGap(89, 89, 89)
                 .addComponent(botonNivel5)
                 .addGap(90, 90, 90)
                 .addComponent(botonNivelInfinito)
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(540, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,19 +254,92 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
+
+        botonSkins.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSkinsActionPerformed(evt);
+            }
+        });
+
+        panelSkins.setBackground(new java.awt.Color(0, 0, 0));
+
+        BotonDer.setBackground(new java.awt.Color(0, 0, 0));
+        BotonDer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechder.png"))); // NOI18N
+
+        skin.setBackground(new java.awt.Color(0, 0, 0));
+        skin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                skinActionPerformed(evt);
+            }
+        });
+
+        BotonIzq.setBackground(new java.awt.Color(0, 0, 0));
+        BotonIzq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/flechizq.png"))); // NOI18N
+
+        javax.swing.GroupLayout panelSkinsLayout = new javax.swing.GroupLayout(panelSkins);
+        panelSkins.setLayout(panelSkinsLayout);
+        panelSkinsLayout.setHorizontalGroup(
+            panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSkinsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BotonIzq)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                .addComponent(skin, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(193, 193, 193)
+                .addComponent(BotonDer)
+                .addContainerGap())
+        );
+        panelSkinsLayout.setVerticalGroup(
+            panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSkinsLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addGroup(panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSkinsLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelSkinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BotonDer, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BotonIzq, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50))
+                    .addComponent(skin, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(110, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(403, Short.MAX_VALUE)
+                .addComponent(panelSkins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(243, 243, 243)
+                .addComponent(botonSkins, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(87, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(botonSkins, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(panelSkins, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -235,7 +351,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(219, Short.MAX_VALUE))
+                .addGap(5, 5, 5)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -306,6 +423,14 @@ public class PantallaEleccion extends javax.swing.JFrame {
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivelInfinitoActionPerformed
 
+    private void botonSkinsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSkinsActionPerformed
+        panelSkins.setVisible(!panelSkins.isVisible());
+    }//GEN-LAST:event_botonSkinsActionPerformed
+
+    private void skinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_skinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_skinActionPerformed
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -340,15 +465,21 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonDer;
+    private javax.swing.JButton BotonIzq;
     private javax.swing.JButton botonNivel1;
     private javax.swing.JButton botonNivel2;
     private javax.swing.JButton botonNivel3;
     private javax.swing.JButton botonNivel4;
     private javax.swing.JButton botonNivel5;
     private javax.swing.JButton botonNivelInfinito;
+    private javax.swing.JButton botonSkins;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel panelSkins;
+    private javax.swing.JButton skin;
     // End of variables declaration//GEN-END:variables
 }
