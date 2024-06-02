@@ -1,44 +1,18 @@
 package clases;
 
-import bibliotecas.Conexion;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Mapa {
     private List<int[][]> mapas;
     private int indiceMapaActual;
-    Conexion con = new Conexion();
-    Connection conet;
-    Statement st;
-    ResultSet rs;
     
     public Mapa(){
-        /*mapas = new ArrayList<>();
-        RecuperarMapa rp = new RecuperarMapa();
-        try{
-            String sqlGetMapas = "Select MapaID from Mapas";
-            conet = con.getConnection();
-            st = conet.createStatement();
-            rs = st.executeQuery(sqlGetMapas);
-            if (rs.next()) 
-            {
-                int id =  rs.getInt("MapaID");
-                mapas.add(rp.RecuperarMapa(id));
-            }
-        }catch(SQLException e) 
-        {
-            e.printStackTrace();
-        }*/
         mapas = new ArrayList<>();
         indiceMapaActual = 1;
         RecuperarMapa rp = new RecuperarMapa();
-
-        mapas.add(rp.RecuperarMapa(indiceMapaActual));
         
+        mapas.add(rp.RecuperarMapa(indiceMapaActual));
 
        
         /*mapas.add(new int[][] { //30 filas y 15 columnas
@@ -93,20 +67,20 @@ public class Mapa {
     
     public boolean puedeMoverse(int x, int y){
         if (mapas == null) {
-            System.out.println("nulo");
+            //System.out.println("nulo");
             return false;
         }
         int[][] mapaActual = mapas.get(indiceMapaActual);
         if (mapaActual == null) {
-            System.out.println("nulo2");
+            //System.out.println("nulo2");
             return false;
         }
         if (y < 0 || y >= mapaActual[0].length || x < 0 || x >= mapaActual[0].length) {
-            System.out.println("mapa fuera de rango");
+            //System.out.println("mapa fuera de rango");
             return false;
         }
         if (mapaActual[y][x] == 1){
-            System.out.println("muro");
+            //System.out.println("muro");
             return false;
         }
         return true;

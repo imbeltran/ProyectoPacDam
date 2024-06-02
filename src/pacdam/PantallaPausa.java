@@ -116,7 +116,12 @@ public class PantallaPausa extends javax.swing.JFrame {
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         pacman.detenerTimer();
-        pantallaJuego.borrarPaneles();
+        if(pantallaJuego.getModoInfinito()){
+            pantallaJuego.borrarPanelesInfinito();
+        } else {
+            pantallaJuego.borrarPaneles();
+        }
+        
         pantallaJuego.cerrarVentana();
         this.dispose();
         PantallaMenu p = new PantallaMenu();

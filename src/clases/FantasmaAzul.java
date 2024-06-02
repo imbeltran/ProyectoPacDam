@@ -124,7 +124,7 @@ public class FantasmaAzul extends javax.swing.JPanel {
 
         comprobarImagen();
         repaint();
-        System.out.println("Posicion de fantasmaNaranja en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+        //System.out.println("Posicion de fantasmaAzul en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
     }
    
     public void comprobarImagen(){

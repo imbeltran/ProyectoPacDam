@@ -94,23 +94,6 @@ public class Partida {
         }
         return 1;
     }
-    public int getMapaIDEspecifico()
-    {
-        try{
-            String sqlGetMapaId = "Select MapaID from partidas";
-            conet = con.getConnection();
-            st = conet.createStatement();
-            rs = st.executeQuery(sqlGetMapaId);
-            if (rs.next()) 
-            {
-                return rs.getInt("MapaID");
-            }
-        }catch(SQLException e) 
-        {
-            e.printStackTrace();
-        }
-        return 1;
-    }
     public int getMapaIDmas1()
     {
         try{
@@ -205,19 +188,7 @@ public class Partida {
             e.printStackTrace();
         }
     }
-    public void setMapaId(int id)
-    {
-        try{
-            String sqlSetMapaId = "UPDATE Partidas SET MapaID = "+id;
-            conet = con.getConnection();
-            st = conet.createStatement();
-            rs = st.executeQuery(sqlSetMapaId);
-            
-        }catch(SQLException e) 
-        {
-            e.printStackTrace();
-        }
-    }
+    
     public int getPuntuacionInfinito()
     {
         try{
@@ -235,6 +206,7 @@ public class Partida {
         }
         return 1;
     }
+    
     
     
    /*/pruebas

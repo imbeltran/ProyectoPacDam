@@ -13,7 +13,7 @@ public class RecuperarMapa {
     String sql;
 
     public int[][] RecuperarMapa(int mapaID) {
-        sql = "SELECT DatosMapa FROM Mapas WHERE MapaID = " + mapaID ;
+        sql = "SELECT DatosMapa FROM Mapas WHERE MapaID = '" + mapaID + "'";
         try {
             conet = con.getConnection();
             st = conet.createStatement();

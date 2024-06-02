@@ -392,7 +392,6 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel1ActionPerformed
         mapa.setIndiceMapaActual(0); 
         this.dispose();
-        //pa.setMapaId(1);
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
@@ -401,22 +400,20 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNivel1ActionPerformed
 
     private void botonNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel2ActionPerformed
-        mapa.setIndiceMapaActual(2); 
+        mapa.setIndiceMapaActual(1); 
         this.dispose();
-        pa.setMapaId(2);
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel2ActionPerformed
 
     private void botonNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel3ActionPerformed
-        mapa.setIndiceMapaActual(3); 
+        mapa.setIndiceMapaActual(2); 
         this.dispose();
-        pa.setMapaId(3);
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
-        pantallaJuego.setSize(1500, 750); // Establece las dimensiones deseadas
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
         PantallaEleccion.getInstancia().cerrar();
