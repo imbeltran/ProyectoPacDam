@@ -154,6 +154,19 @@ public class Partida {
         }
         return false;
     }
+    public void setSonido(Boolean sonido)
+    {
+        try{
+            String sqlSetSonido = "UPDATE Configuracion SET Sonido = "+sonido;
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlSetSonido);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
     public int getSkinID()
     {
         try{

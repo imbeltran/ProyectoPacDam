@@ -12,9 +12,8 @@ public class PantallaFin extends javax.swing.JFrame {
         initComponents();
     }
     
-    public PantallaFin(int puntuacion, boolean win, Mapa mapa, boolean musica) {
+    public PantallaFin(int puntuacion, boolean win, Mapa mapa) {
         this.mapa = mapa;
-        this.musica = musica;
         initComponents();
         this.setSize(1500, 750); // Establece las dimensiones deseadas
         this.setLocationRelativeTo(null);
@@ -156,7 +155,7 @@ public class PantallaFin extends javax.swing.JFrame {
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed
         this.dispose();
-        PantallaMenu p = new PantallaMenu();
+        PantallaEleccion p = new PantallaEleccion();
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         p.setVisible(true);
@@ -164,7 +163,7 @@ public class PantallaFin extends javax.swing.JFrame {
 
     private void botonSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalir1ActionPerformed
         this.dispose();
-        PantallaMenu p = new PantallaMenu();
+        PantallaEleccion p = new PantallaEleccion();
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         p.setVisible(true);
@@ -172,7 +171,7 @@ public class PantallaFin extends javax.swing.JFrame {
 
     private void botonReintentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReintentarActionPerformed
         this.dispose();
-        PantallaJuego p = new PantallaJuego(mapa, musica);
+        PantallaJuego p = new PantallaJuego(mapa);
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         p.setVisible(true);

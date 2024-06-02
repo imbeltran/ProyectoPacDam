@@ -17,7 +17,6 @@ public class PantallaEleccion extends javax.swing.JFrame {
 
     private Mapa mapa;
     private static PantallaEleccion instancia;
-    private boolean musica;
     private boolean modoInfinito = true;
     Conexion con = new Conexion();
     Connection conet;
@@ -41,13 +40,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
         };
     
     public PantallaEleccion() {
-        this.mapa = new Mapa();
-        initComponents();
-    }
-    public PantallaEleccion(boolean musica) {
         initComponents();
         this.mapa = new Mapa();
-        this.musica = musica;
         this.setSize(1500, 750); // Establece las dimensiones deseadas
         this.setLocationRelativeTo(null);
         try {
@@ -393,7 +387,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         p.setMapaID(1);
         mapa.setIndiceMapaActual(0);
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true); 
@@ -404,7 +398,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
         p.setMapaID(2); 
         mapa.setIndiceMapaActual(1);
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
@@ -414,7 +408,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel3ActionPerformed
         p.setMapaID(3); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
@@ -424,7 +418,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel4ActionPerformed
         p.setMapaID(4); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
@@ -434,7 +428,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivel5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel5ActionPerformed
         p.setMapaID(5); 
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true);
@@ -444,7 +438,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     private void botonNivelInfinitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivelInfinitoActionPerformed
         p.setMapaID(1);
         this.dispose();
-        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica, modoInfinito);
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, modoInfinito);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
         pantallaJuego.setVisible(true); 

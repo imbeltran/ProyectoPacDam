@@ -12,21 +12,15 @@ import musicas.SClip;
 
 public class PantallaMenu extends javax.swing.JFrame {
     private final SClip musicaMenu = new SClip("src/musicas/pacman.wav");
-    private boolean musica;
+    private Partida p = new Partida();
     
     public PantallaMenu() {
-       musicaMenu.loop();
         initComponents();
-    }
-    
-    public PantallaMenu(boolean musica) {
-        initComponents();
-        this.musica = musica;
+        boolean musica = p.getSonido();
         if (musica)
         {
             musicaMenu.loop();
         }
-        
     }
     
     
@@ -145,12 +139,12 @@ public class PantallaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartidaActionPerformed
-        PantallaEleccion p = new PantallaEleccion(musica);
+        Partida pa = new Partida();
+        pa.ReiniciarEstado();
+        pa.crearPartida();
+        PantallaEleccion p = new PantallaEleccion();
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
-        Partida pa = new Partida();
-        //pa.ReiniciarEstado();
-        pa.crearPartida();
         p.setVisible(true);
         this.dispose();
         musicaMenu.stop();

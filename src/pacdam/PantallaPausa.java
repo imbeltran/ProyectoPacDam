@@ -1,28 +1,31 @@
 package pacdam;
 
 import clases.PacMan;
+import clases.Partida;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 
 public class PantallaPausa extends javax.swing.JFrame {
     
     private PacMan pacman;
-    private boolean musica;
     private PantallaJuego pantallaJuego;
+    private boolean musica;
+    Partida p = new Partida();
     
     public PantallaPausa(PacMan pacman, PantallaJuego pantallaJuego) {
         this.pacman = pacman;
+        this.musica = p.getSonido();
         this.pantallaJuego=pantallaJuego;
-        initComponents();
-    }
-    public PantallaPausa(PacMan pacman, boolean musica, PantallaJuego pantallaJuego) {
-        this.pacman = pacman;
-        this.musica = musica;
-        this.pantallaJuego=pantallaJuego;
-        initComponents();
+        //p.setSonido(true);
         if(musica)
         {
             musicaCB.setSelected(true);
         }
+        
+        initComponents();
     }
 
     @SuppressWarnings("unchecked")
@@ -106,7 +109,6 @@ public class PantallaPausa extends javax.swing.JFrame {
 
     private void botonContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarActionPerformed
         pacman.setPausado(false);
-        pacman.setMusica(musicaCB.isSelected());
         this.dispose(); 
     }//GEN-LAST:event_botonContinuarActionPerformed
 
@@ -131,7 +133,7 @@ public class PantallaPausa extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void musicaCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_musicaCBActionPerformed
-        
+        p.setSonido(this.musica);
     }//GEN-LAST:event_musicaCBActionPerformed
 
     /**

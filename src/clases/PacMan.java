@@ -85,14 +85,10 @@ public class PacMan extends javax.swing.JPanel {
     private Partida p = new Partida();
 
     public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego) {
-        initComponents();
-    }
-    
-    public PacMan(int[][] mapa, Mapa mapas, PantallaJuego pantallaJuego, boolean musica) {
         this.mapas = mapas;
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
-        this.musica = musica;
+        this. musica = p.getSonido();
         x = 51; y = 51;
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -227,11 +223,12 @@ public class PacMan extends javax.swing.JPanel {
                 if (pantallaJuego.getModoInfinito()) {
                     // Si está en modo infinito, reinicia el nivel sin mostrar las pantallas finales
                     pantallaJuego.reiniciarJuegoModoInfinito();
+                    sonidoMovimiento.stop();
                 } else {
                     // Si no está en modo infinito, entonces muestra la pantalla de fin y elección
                     System.out.println("¡Felicidades! Te has pasado el nivel.");
                     pantallaJuego.finalizarJuego();
-                    
+                    sonidoMovimiento.stop();
                 }
                 puntuacion = 0;
             }
@@ -397,7 +394,7 @@ public class PacMan extends javax.swing.JPanel {
    
     public void pausarJuego() {
         sonidoMovimiento.stop();
-        PantallaPausa p = new PantallaPausa(this, musica, pantallaJuego);
+        PantallaPausa p = new PantallaPausa(this, pantallaJuego);
         p.setLocationRelativeTo(null);
         p.setVisible(true);
     } 

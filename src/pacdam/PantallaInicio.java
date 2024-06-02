@@ -38,7 +38,7 @@ public class PantallaInicio extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {             
-                PantallaMenu pantallaMenu = new PantallaMenu(musica);
+                PantallaMenu pantallaMenu = new PantallaMenu();
                 pantallaMenu.setSize(1500, 750); // Establece las dimensiones deseadas
                 pantallaMenu.setLocationRelativeTo(null);
                 pantallaMenu.setVisible(true);

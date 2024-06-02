@@ -42,7 +42,6 @@ public class PantallaJuego extends javax.swing.JFrame {
     private JLabel puntuacionLabel;
     private int puntuacion;
     private int puntuacionTotal;
-    private boolean musica;
     //private Image criptoMoneda = new ImageIcon(getClass().getResource("/imagenes/Bitcoin.png")).getImage();
     private JPanel[][] panelesMapa;
     private boolean win;
@@ -61,43 +60,12 @@ public class PantallaJuego extends javax.swing.JFrame {
 
     public PantallaJuego(Mapa mapa) {
         this.mapa = mapa;
-        datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
-        this.pantallaJuego = pantallaJuego;
-        this.setTitle(p.getMapaName());
-        
-        panelPacMan = new PacMan(datosMapa, mapa, this);
-        this.add(panelPacMan);
-        panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
-        
-        panelFantasmaNaranja = new FantasmaNaranja(datosMapa, mapa, this);
-        this.add(panelFantasmaNaranja);
-        panelFantasmaNaranja.setBounds(panelFantasmaNaranja.getPosX(), panelFantasmaNaranja.getPosY(), 48, 48);
-        
-        panelFantasmaRojo = new FantasmaRojo(datosMapa, mapa, this, panelPacMan);
-        this.add(panelFantasmaRojo);
-        panelFantasmaRojo.setBounds(panelFantasmaRojo.getPosX(), panelFantasmaRojo.getPosY(), 48, 48);
-        
-        panelFantasmaAzul = new FantasmaAzul(datosMapa, mapa, this);
-        this.add(panelFantasmaAzul);
-        panelFantasmaAzul.setBounds(panelFantasmaAzul.getPosX(), panelFantasmaAzul.getPosY(), 48, 48);
-        
-        
-        crearMapa();          
-        initComponents();    
-        movimientoPacMan();
-        movimientoFantasmas();
-        movimientoFantasmaRojo();
-    }
-    
-    public PantallaJuego(Mapa mapa, boolean musica) {
-        this.mapa = mapa;
-        this.musica = musica;
         this.pantallaJuego = pantallaJuego;
         this.setTitle(p.getMapaName());
         //this.labelNivel.setText("Nivel: "+p.getMapaName()); hay que mirar por que no va
         datosMapa = mapa.getMapa(p.getMapaID()-1);
         System.out.println(datosMapa);
-        panelPacMan = new PacMan(datosMapa, mapa, this, musica);
+        panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
         
@@ -121,7 +89,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         movimientoFantasmaRojo();
     }
     
-    public PantallaJuego(Mapa mapa, boolean musica, boolean modoInfinito) {
+    public PantallaJuego(Mapa mapa, boolean modoInfinito) {
         this.setSize(1500, 750); // Establece las dimensiones deseadas
         this.setLocationRelativeTo(null);
         this.mapa = mapa;
@@ -133,7 +101,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.timers = new ArrayList<>();
         this.modoInfinito = true;
 
-        panelPacMan = new PacMan(datosMapa, mapa, this, musica);
+        panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
 
@@ -214,7 +182,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                             win = false;
                             // Abre la pantalla de fin de juego
                             
-                            PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa, musica);
+                            PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa);
                             pantallaFin.setVisible(true);
                             cerrarVentana();
                         }   
@@ -263,7 +231,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                                 panelPacMan.setPausado(true);
                                 win = false;
                                 // Abre la pantalla de fin de juego
-                                PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa, musica);
+                                PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa);
                                 pantallaFin.setVisible(true);
                                 cerrarVentana();
                             }
@@ -445,7 +413,7 @@ public class PantallaJuego extends javax.swing.JFrame {
             this.borrarPanelesInfinito();
             this.dispose();
             win = true;
-            PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa, musica);
+            PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa);
             pantallaFin.setVisible(true);
             PantallaEleccion.getInstancia().setVisible(true);
         }
@@ -457,7 +425,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.dispose();
         win = true;
         p.setEstado(win);
-        PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa, musica);
+        PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa);
         pantallaFin.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaFin.setLocationRelativeTo(null);
         pantallaFin.setVisible(true);
@@ -468,7 +436,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     public void reiniciarJuegoModoInfinito() {
         //panelPacMan.setPausado(true);     
         detenerTodosLosTimers();
-        PantallaJuego nuevaPartida = new PantallaJuego(mapa, musica, true);       
+        PantallaJuego nuevaPartida = new PantallaJuego(mapa, true);       
         nuevaPartida.setSize(1500, 750);
         nuevaPartida.setLocationRelativeTo(null);
         nuevaPartida.setVisible(true);
