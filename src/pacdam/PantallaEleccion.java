@@ -32,7 +32,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     String sqlMapa4 = "SELECT estado FROM Mapas WHERE MapaID = 3";
     String sqlMapa5 = "SELECT estado FROM Mapas WHERE MapaID = 4";
     
-    Partida pa = new Partida();
+    Partida p = new Partida();
     private int currentIndex;
     ImageIcon[] skins = {
             new ImageIcon(getClass().getResource("/imagenes/skins/PacDAM_1.gif")),
@@ -112,7 +112,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     
     private void updateSkin() {
         skin.setIcon(skins[currentIndex]);
-        pa.setSkinID(currentIndex);
+        p.setSkinID(currentIndex);
         System.out.println(currentIndex);
     }
     
@@ -390,7 +390,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonNivel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel1ActionPerformed
-        mapa.setIndiceMapaActual(0); 
+        p.setMapaID(1);
+        mapa.setIndiceMapaActual(0);
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
@@ -400,7 +401,8 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNivel1ActionPerformed
 
     private void botonNivel2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel2ActionPerformed
-        mapa.setIndiceMapaActual(1); 
+        p.setMapaID(2); 
+        mapa.setIndiceMapaActual(1);
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
@@ -410,7 +412,7 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNivel2ActionPerformed
 
     private void botonNivel3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel3ActionPerformed
-        mapa.setIndiceMapaActual(2); 
+        p.setMapaID(3); 
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
@@ -420,15 +422,27 @@ public class PantallaEleccion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNivel3ActionPerformed
 
     private void botonNivel4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel4ActionPerformed
-        
+        p.setMapaID(4); 
+        this.dispose();
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        pantallaJuego.setVisible(true);
+        PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel4ActionPerformed
 
     private void botonNivel5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivel5ActionPerformed
-        // TODO add your handling code here:
+        p.setMapaID(5); 
+        this.dispose();
+        PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica);
+        pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas
+        pantallaJuego.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        pantallaJuego.setVisible(true);
+        PantallaEleccion.getInstancia().cerrar();
     }//GEN-LAST:event_botonNivel5ActionPerformed
 
     private void botonNivelInfinitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNivelInfinitoActionPerformed
-        mapa.setIndiceMapaActual(0); 
+        p.setMapaID(1);
         this.dispose();
         PantallaJuego pantallaJuego = new PantallaJuego(mapa, musica, modoInfinito);
         pantallaJuego.setSize(1516, 789); // Establece las dimensiones deseadas

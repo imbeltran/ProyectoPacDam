@@ -149,6 +149,7 @@ public class PantallaMenu extends javax.swing.JFrame {
         p.setSize(1500, 750);
         p.setLocationRelativeTo(null);
         Partida pa = new Partida();
+        //pa.ReiniciarEstado();
         pa.crearPartida();
         p.setVisible(true);
         this.dispose();

@@ -95,7 +95,8 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.pantallaJuego = pantallaJuego;
         this.setTitle(p.getMapaName());
         //this.labelNivel.setText("Nivel: "+p.getMapaName()); hay que mirar por que no va
-        datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        datosMapa = mapa.getMapa(p.getMapaID()-1);
+        System.out.println(datosMapa);
         panelPacMan = new PacMan(datosMapa, mapa, this, musica);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
@@ -455,6 +456,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.borrarPaneles();
         this.dispose();
         win = true;
+        p.setEstado(win);
         PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa, musica);
         pantallaFin.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaFin.setLocationRelativeTo(null);

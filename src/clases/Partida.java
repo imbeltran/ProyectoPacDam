@@ -15,10 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author bik
- */
 public class Partida {
     Conexion con = new Conexion();
     Connection conet;
@@ -110,6 +106,19 @@ public class Partida {
             e.printStackTrace();
         }
         return 1;
+    }
+    public void setMapaID(int Id)
+    {
+        try{
+            String sqlSetMapaId = "UPDATE Partidas SET MapaID = "+Id;
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlSetMapaId);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
     }
     public String getMapaName()
     {
@@ -205,6 +214,20 @@ public class Partida {
             e.printStackTrace();
         }
         return 1;
+    }
+    
+    public void ReiniciarEstado()
+    {
+        try{
+            String sqlReiniciarEstado = "Update mapas set Estado = false";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlReiniciarEstado);
+
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
     }
     
     
