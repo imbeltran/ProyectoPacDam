@@ -61,6 +61,15 @@ public class PacMan extends javax.swing.JPanel {
     private Image imagenCerradaSDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesSS.png")).getImage();
     private Image imagenAbiertaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesD.png")).getImage();
     private Image imagenCerradaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesDD.png")).getImage();
+    //Vagfum
+    private Image imagenAbiertaWV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumW.png")).getImage();
+    private Image imagenCerradaWV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumWW.png")).getImage();
+    private Image imagenAbiertaAV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumA.png")).getImage();
+    private Image imagenCerradaAV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumAA.png")).getImage();
+    private Image imagenAbiertaSV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumS.png")).getImage();
+    private Image imagenCerradaSV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumSS.png")).getImage();
+    private Image imagenAbiertaDV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumD.png")).getImage();
+    private Image imagenCerradaDV = new ImageIcon(getClass().getResource("/imagenes/PacDam/Vagfum/VagfumDD.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
     // </editor-fold>
     private boolean bocaAbierta = true;
@@ -305,7 +314,62 @@ public class PacMan extends javax.swing.JPanel {
             break;
         }
         case 2: 
-            
+            if (!borracho)
+            {
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWV;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWV;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSV;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSV;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDV;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDV;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaAV;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaAV;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            }else{
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWDiB;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWDiB;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSDiB;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSDiB;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDDiB;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDDiB;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaADiB;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaADiB;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();    
+            }
             break;
         default: 
             if (!borracho)
