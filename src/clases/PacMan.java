@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import musicas.SClip;
 import pacdam.PantallaEleccion;
-import pacdam.PantallaFin;
 import pacdam.PantallaJuego;
 import pacdam.PantallaPausa;
 
@@ -218,7 +217,7 @@ public class PacMan extends javax.swing.JPanel {
                 }
             }
 
-            if (puntuacion >= mapas.getPuntuacionTotal()) {
+            if (puntuacion >= 30) { //mapas.getPuntuacionTotal()
                 if (pantallaJuego.getModoInfinito()) {
                     // Si está en modo infinito, reinicia el nivel sin mostrar las pantallas finales
                     p.setModoInfinito(p.getModoInfinito()+1);

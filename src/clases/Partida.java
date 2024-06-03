@@ -274,6 +274,19 @@ public class Partida {
         return modoInfinito;
     }
 
+    public void setNuevaPuntuacion(String nombre, int puntuacion)
+    {
+        try{
+            String sqlSetNuevaPuntuacion = "INSERT INTO puntuaciones (nombre, puntuacion) VALUES ('"+nombre+"', "+puntuacion+")";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            st.executeUpdate(sqlSetNuevaPuntuacion);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
     
     
     

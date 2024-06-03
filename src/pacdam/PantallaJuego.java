@@ -194,7 +194,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                             win = false;
                             // Abre la pantalla de fin de juego
                             
-                            PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa);
+                            PantallaFinLose pantallaFin = new PantallaFinLose(puntuacion, win, mapa, false);
                             pantallaFin.setVisible(true);
                             cerrarVentana();
                         }   
@@ -248,7 +248,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                                 detenerTodosLosTimers();
                                 borrarPaneles();
                                 // Abre la pantalla de fin de juego
-                                PantallaFin pantallaFin = new PantallaFin(puntuacion, win, mapa);
+                                PantallaFinLoseInfi pantallaFin = new PantallaFinLoseInfi(puntuacion, win, mapa, true);
                                 pantallaFin.setVisible(true);
                                 cerrarVentana();
                             }
@@ -431,7 +431,8 @@ public class PantallaJuego extends javax.swing.JFrame {
             this.borrarPanelesInfinito();
             this.dispose();
             win = true;
-            PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa);
+            int nivel = p.getMapaID();
+            PantallaFinWin pantallaFin = new PantallaFinWin(puntuacionTotal, win, mapa, modoInfinito, nivel);
             pantallaFin.setVisible(true);
             PantallaEleccion.getInstancia().setVisible(true);
         }
@@ -443,7 +444,8 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.dispose();
         win = true;
         p.setEstado(win);
-        PantallaFin pantallaFin = new PantallaFin(puntuacionTotal, win, mapa);
+        int nivel = p.getMapaID();
+        PantallaFinWin pantallaFin = new PantallaFinWin(puntuacionTotal, win, mapa, modoInfinito, nivel);
         pantallaFin.setSize(1516, 789); // Establece las dimensiones deseadas
         pantallaFin.setLocationRelativeTo(null);
         pantallaFin.setVisible(true);
@@ -457,7 +459,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         for (int i = 0; i < datosMapa.length; i++) {
             datosMapa[i] = datosMapaOriginal[i].clone();
         }
-        PantallaJuego nuevaPartida = new PantallaJuego(mapa, true);       
+        PantallaJuego nuevaPartida = new PantallaJuego(mapa, modoInfinito);       
         nuevaPartida.setSize(1500, 750);
         nuevaPartida.setLocationRelativeTo(null);
         nuevaPartida.setVisible(true);
