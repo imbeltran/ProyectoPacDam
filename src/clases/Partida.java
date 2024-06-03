@@ -242,6 +242,38 @@ public class Partida {
             e.printStackTrace();
         }
     }
+    public void setModoInfinito(int modoInfinito)
+    {
+        try{
+            String sqlSetModoInfinito = "UPDATE Mapas SET nivelInfinito = "+modoInfinito + " where MapaId = "+getMapaID();
+            conet = con.getConnection();
+            st = conet.createStatement();
+            st.executeUpdate(sqlSetModoInfinito);
+            
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public int getModoInfinito(){
+        int modoInfinito = 0;
+        try{
+            String sqlGetModoInfinito = "SELECT nivelInfinito FROM Mapas where MapaId = "+ getMapaID();
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetModoInfinito);
+            if(rs.next()){
+                modoInfinito = rs.getInt("nivelInfinito");
+            }
+
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return modoInfinito;
+    }
+
     
     
     

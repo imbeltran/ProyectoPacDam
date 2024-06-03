@@ -218,17 +218,17 @@ public class PacMan extends javax.swing.JPanel {
                 }
             }
 
-            if (puntuacion >= 50/*mapas.getPuntuacionTotal()*/) {
-                System.out.println(pantallaJuego.getModoInfinito());
+            if (puntuacion >= mapas.getPuntuacionTotal()) {
                 if (pantallaJuego.getModoInfinito()) {
                     // Si está en modo infinito, reinicia el nivel sin mostrar las pantallas finales
+                    p.setModoInfinito(p.getModoInfinito()+1);
                     pantallaJuego.reiniciarJuegoModoInfinito();
                     sonidoMovimiento.stop();
                 } else {
                     // Si no está en modo infinito, entonces muestra la pantalla de fin y elección
-                    System.out.println("¡Felicidades! Te has pasado el nivel.");
-                    pantallaJuego.finalizarJuego();
-                    sonidoMovimiento.stop();
+                        System.out.println("¡Felicidades! Te has pasado el nivel.");
+                        pantallaJuego.finalizarJuego();
+                        sonidoMovimiento.stop();
                 }
                 puntuacion = 0;
             }
@@ -429,22 +429,22 @@ public class PacMan extends javax.swing.JPanel {
     
     public boolean chocaConFantasmaNaranja(FantasmaNaranja fantasma) {
         // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
-        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+        return Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
     }
 
     public boolean chocaConFantasmaAzul(FantasmaAzul fantasma) {
         // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
-        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+        return Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
     }
 
     public boolean chocaConFantasmaRojo(FantasmaRojo fantasma) {
         // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
-        return !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+        return Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
     }
     
     public boolean chocaConFantasmaNaranjaInfinito(List<FantasmaNaranja> fantasmasNaranjas) {
         for (FantasmaNaranja fantasma : fantasmasNaranjas) {
-            if (fantasma != null && !pantallaJuego.getIrBorracho() && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25) {
+            if (fantasma != null && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25) {
                 // Aquí va tu código cuando Pacman choca con un FantasmaNaranja
                 return true;
             }
