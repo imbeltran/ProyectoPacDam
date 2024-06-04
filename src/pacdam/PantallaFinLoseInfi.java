@@ -52,12 +52,19 @@ public class PantallaFinLoseInfi extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         nombreTF = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        PanelLoseInfi.setBackground(new java.awt.Color(0, 0, 0));
+        PanelLoseInfi.setForeground(new java.awt.Color(255, 255, 0));
         PanelLoseInfi.setMaximumSize(new java.awt.Dimension(1500, 700));
         PanelLoseInfi.setMinimumSize(new java.awt.Dimension(1500, 700));
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 0));
         jLabel3.setText("Has muerto!!");
 
         jButton1.setText("Enviar puntuacion");
@@ -67,21 +74,40 @@ public class PantallaFinLoseInfi extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/AzulImagen.png"))); // NOI18N
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/muerte/PacDAMMuerto.png"))); // NOI18N
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/RojoAAImagen.png"))); // NOI18N
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/NaranjaImagen.png"))); // NOI18N
+
         javax.swing.GroupLayout PanelLoseInfiLayout = new javax.swing.GroupLayout(PanelLoseInfi);
         PanelLoseInfi.setLayout(PanelLoseInfiLayout);
         PanelLoseInfiLayout.setHorizontalGroup(
             PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelLoseInfiLayout.createSequentialGroup()
-                .addContainerGap(641, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLoseInfiLayout.createSequentialGroup()
+                    .addGroup(PanelLoseInfiLayout.createSequentialGroup()
+                        .addGap(0, 635, Short.MAX_VALUE)
                         .addGroup(PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(567, 567, 567))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLoseInfiLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(601, 601, 601))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLoseInfiLayout.createSequentialGroup()
+                                .addGroup(PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(567, 567, 567))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLoseInfiLayout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(601, 601, 601))))
+                    .addGroup(PanelLoseInfiLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         PanelLoseInfiLayout.setVerticalGroup(
             PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +118,13 @@ public class PantallaFinLoseInfi extends javax.swing.JFrame {
                 .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(543, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addGroup(PanelLoseInfiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -168,7 +200,11 @@ public class PantallaFinLoseInfi extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelLoseInfi;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField nombreTF;
     // End of variables declaration//GEN-END:variables
 }
