@@ -64,6 +64,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     public PantallaJuego(Mapa mapa) {
         this.mapa = mapa;
         this.pantallaJuego = pantallaJuego;
+        this.modoInfinito = false; 
         this.setTitle(p.getMapaName());
         //this.labelNivel.setText("Nivel: "+p.getMapaName()); hay que mirar por que no va
         datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());

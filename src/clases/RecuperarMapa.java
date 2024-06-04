@@ -43,4 +43,20 @@ public class RecuperarMapa {
         }
         return mapa;
     }
+    public String booleanArrayToString(boolean[][] array) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                sb.append(array[i][j] ? '1' : '0');
+                if (j < array[i].length - 1) {
+                    sb.append(',');
+                }
+            }
+            if (i < array.length - 1) {
+                sb.append(':');
+            }
+        }
+        return sb.toString();
+    }
+    
 }

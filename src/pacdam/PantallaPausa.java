@@ -1,7 +1,12 @@
 package pacdam;
 
+import clases.FantasmaAzul;
+import clases.FantasmaNaranja;
+import clases.FantasmaRojo;
+import clases.FantasmaRosa;
 import clases.PacMan;
 import clases.Partida;
+import clases.RecuperarMapa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -13,12 +18,22 @@ public class PantallaPausa extends javax.swing.JFrame {
     private PacMan pacman;
     private PantallaJuego pantallaJuego;
     private boolean musica;
+    private boolean[][] pasado;
+    private FantasmaNaranja naranja;
+    private FantasmaAzul azul;
+    private FantasmaRojo rojo;
+    private FantasmaRosa rosa;
     Partida p = new Partida();
     
-    public PantallaPausa(PacMan pacman, PantallaJuego pantallaJuego) {
+    public PantallaPausa(PacMan pacman, PantallaJuego pantallaJuego, boolean infinito, boolean[][] pasado) {
         this.pacman = pacman;
         this.musica = p.getSonido();
         this.pantallaJuego=pantallaJuego;
+        this.pasado = pasado;
+        this.naranja = naranja;
+        this.azul = azul;
+        this.rojo = rojo;
+        //this.rosa = rosa
         //p.setSonido(true);
         if(musica)
         {
@@ -26,6 +41,7 @@ public class PantallaPausa extends javax.swing.JFrame {
         }
         
         initComponents();
+        botonGuardarPartida.setEnabled(!infinito);
     }
 
     @SuppressWarnings("unchecked")
@@ -113,7 +129,20 @@ public class PantallaPausa extends javax.swing.JFrame {
     }//GEN-LAST:event_botonContinuarActionPerformed
 
     private void botonGuardarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarPartidaActionPerformed
-        // TODO add your handling code here:
+        RecuperarMapa rm = new RecuperarMapa();
+        String pacmanPasaPor = rm.booleanArrayToString(pasado);
+        pacman.getPosX();
+        pacman.getPosY();
+        naranja.getPosX();
+        naranja.getPosY();
+        azul.getPosX();
+        azul.getPosY();
+        rojo.getPosX();
+        rojo.getPosY();
+        rosa.getPosX();
+        rosa.getPosY();
+        
+        System.out.println(pacmanPasaPor);
     }//GEN-LAST:event_botonGuardarPartidaActionPerformed
 
     private void botonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalirActionPerformed

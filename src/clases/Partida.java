@@ -338,17 +338,19 @@ public class Partida {
    /*/pruebas
     
     public void saveGame(int partidaGuardadaID, int partidaID, int mapaID, int puntuacion, int pacmanX, int pacmanY, int[][] mapa, Connection connection) throws SQLException, IOException {
+        
         String sql = "INSERT INTO PartidaGuardada (PartidaGuardadaID, PartidaID, MapaID, Puntuacion, PosicionPacManX, PosicionPacManY, MapaEstado) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setInt(1, partidaGuardadaID);
-        preparedStatement.setInt(2, partidaID);
-        preparedStatement.setInt(3, mapaID);
-        preparedStatement.setInt(4, puntuacion);
-        preparedStatement.setInt(5, pacmanX);
-        preparedStatement.setInt(6, pacmanY);
         preparedStatement.setBytes(7, serializeMap(mapa));
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
+        try{
+            String sqlTruncateTable = "DELETE FROM calculos";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            st.executeUpdate(sqlTruncateTable);
+
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
     }
     
     public byte[] serializeMap(int[][] map) throws IOException {
