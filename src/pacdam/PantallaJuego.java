@@ -245,6 +245,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                                 panelPacMan.setPausado(true);
                                 win = false;
                                 p.setModoInfinito(1);
+                                p.actualizarSumaPuntuacion(puntuacion);
                                 detenerTodosLosTimers();
                                 borrarPaneles();
                                 // Abre la pantalla de fin de juego
@@ -253,7 +254,6 @@ public class PantallaJuego extends javax.swing.JFrame {
                                 cerrarVentana();
                             }
                         }
-                        // ... (repite para los otros tipos de fantasmas)
                     }
                 }
             }

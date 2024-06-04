@@ -274,19 +274,64 @@ public class Partida {
         return modoInfinito;
     }
 
-    public void setNuevaPuntuacion(String nombre, int puntuacion)
-    {
+    public void actualizarSumaPuntuacion(int puntuacion){
         try{
-            String sqlSetNuevaPuntuacion = "INSERT INTO puntuaciones (nombre, puntuacion) VALUES ('"+nombre+"', "+puntuacion+")";
+            // Primero intenta hacer un UPDATE
+            String sqlUpdateSuma = "UPDATE Calculos SET sumas = sumas + "+ puntuacion;
             conet = con.getConnection();
             st = conet.createStatement();
-            st.executeUpdate(sqlSetNuevaPuntuacion);
-            
+            int updatedRows = st.executeUpdate(sqlUpdateSuma);
+
+            // Si no se actualizó ninguna fila, entonces hace un INSERT
+            if (updatedRows == 0) {
+                String sqlInsertSuma = "INSERT INTO Calculos (sumas) VALUES ("+ puntuacion +")";
+                st.executeUpdate(sqlInsertSuma);
+            }
+
         }catch(SQLException e) 
         {
             e.printStackTrace();
         }
     }
+
+    
+    public void guardarPuntuacion(String nombre){
+        try{
+            // Obtiene la suma de las puntuaciones de la tabla Calculos
+            String sqlGetSuma = "SELECT sumas FROM Calculos";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            rs = st.executeQuery(sqlGetSuma);
+            int sumaPuntuacion = 0;
+            if(rs.next()){
+                sumaPuntuacion = rs.getInt("sumas");
+            }
+
+            // Inserta la suma de las puntuaciones en la tabla Puntuaciones con el nombre del usuario
+            String sqlInsertPuntuacion = "INSERT INTO Puntuaciones (Nombre, Puntuacion) VALUES ('"+nombre+"', "+sumaPuntuacion+")";
+            st.executeUpdate(sqlInsertPuntuacion);
+
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void borrarTablaCalculos(){
+        try{
+            String sqlTruncateTable = "DELETE FROM calculos";
+            conet = con.getConnection();
+            st = conet.createStatement();
+            st.executeUpdate(sqlTruncateTable);
+
+        }catch(SQLException e) 
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
     
     
     

@@ -116,7 +116,8 @@ public class PantallaFinLoseInfi extends javax.swing.JFrame {
         if (nombreTF.getText() != "")
             {
                 String nombre = nombreTF.getText();
-                pa.setNuevaPuntuacion(nombre, puntuacion);
+                pa.guardarPuntuacion(nombre);
+                pa.borrarTablaCalculos();
                 this.dispose();
                 PantallaEleccion p = new PantallaEleccion();
                 p.setSize(1500, 750);

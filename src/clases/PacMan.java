@@ -217,10 +217,11 @@ public class PacMan extends javax.swing.JPanel {
                 }
             }
 
-            if (puntuacion >= 30) { //mapas.getPuntuacionTotal()
+            if (puntuacion >= mapas.getPuntuacionTotal()) {
                 if (pantallaJuego.getModoInfinito()) {
                     // Si está en modo infinito, reinicia el nivel sin mostrar las pantallas finales
                     p.setModoInfinito(p.getModoInfinito()+1);
+                    p.actualizarSumaPuntuacion(puntuacion);
                     pantallaJuego.reiniciarJuegoModoInfinito();
                     sonidoMovimiento.stop();
                 } else {
