@@ -60,6 +60,20 @@ public class PacMan extends javax.swing.JPanel {
     private Image imagenCerradaSDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesSS.png")).getImage();
     private Image imagenAbiertaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesD.png")).getImage();
     private Image imagenCerradaDDiB = new ImageIcon(getClass().getResource("/imagenes/PacDam/Dientes/Borracho/pacmandientesDD.png")).getImage();
+    //vagfum
+    private Image imagenAbiertaWV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumW.png")).getImage();
+    private Image imagenCerradaWV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumWW.png")).getImage();
+    private Image imagenAbiertaAV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumA.png")).getImage();
+    private Image imagenCerradaAV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumAA.png")).getImage();
+    private Image imagenAbiertaSV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumS.png")).getImage();
+    private Image imagenCerradaSV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumSS.png")).getImage();
+    private Image imagenAbiertaDV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumD.png")).getImage();
+    private Image imagenCerradaDV = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/VagfumDD.png")).getImage();
+    //vagfum borracho
+    private Image imagenAbiertaAVB = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/Borracho/VagfumSB.png")).getImage();
+    private Image imagenCerradaAVB = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/Borracho/VagfumSSB.png")).getImage();
+    private Image imagenAbiertaDVB = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/Borracho/VagfumDB.png")).getImage();
+    private Image imagenCerradaDVB = new ImageIcon(getClass().getResource("/imagenes/PacDam/VagFum/Borracho/VagfumDDB.png")).getImage();
     private Image imagenActual = imagenAbiertaD;
     // </editor-fold>
     private boolean bocaAbierta = true;
@@ -297,10 +311,65 @@ public class PacMan extends javax.swing.JPanel {
                 }
                 bocaAbierta = !bocaAbierta;
                 repaint();
+            }
             break;
-        }
         case 2: 
-            
+            if (!borracho)
+            {
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaWV;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaWV;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaSV;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaSV;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDV;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDV;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaAV;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaAV;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            }else{
+                if (bocaAbierta && arriba) {
+                imagenActual = imagenCerradaDVB;
+                } else {
+                    if (!bocaAbierta && arriba) 
+                        imagenActual = imagenAbiertaDVB;
+                }
+                if (bocaAbierta && abajo) {
+                    imagenActual = imagenCerradaDVB;
+                } else {
+                    if (!bocaAbierta && abajo) 
+                        imagenActual = imagenAbiertaDVB;
+                }
+                if (bocaAbierta && derecha) {
+                    imagenActual = imagenCerradaDVB;
+                } else {
+                    if (!bocaAbierta && derecha) 
+                        imagenActual = imagenAbiertaDVB;
+                }
+                if (bocaAbierta && izquierda) {
+                    imagenActual = imagenCerradaAVB;
+                } else {
+                    if (!bocaAbierta && izquierda) 
+                        imagenActual = imagenAbiertaAVB;
+                }
+                bocaAbierta = !bocaAbierta;
+                repaint();
+            }
             break;
         default: 
             if (!borracho)

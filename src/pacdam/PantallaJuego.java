@@ -344,6 +344,10 @@ public class PantallaJuego extends javax.swing.JFrame {
                         panel.add(Machete);
                         break;
                     case 2:
+                        ImageIcon iconChampi = new ImageIcon(getClass().getResource("/imagenes/champi.png"));
+                        JLabel Champi = new JLabel(iconChampi);
+                        Champi.setBounds(20, 20, 20, 20);
+                        panel.add(Champi);
                         break;
                     default: 
                         ImageIcon iconCerveza = new ImageIcon(getClass().getResource("/imagenes/cerveza.png"));
