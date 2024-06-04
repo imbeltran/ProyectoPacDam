@@ -26,14 +26,14 @@ public class FantasmaRosa extends javax.swing.JPanel {
     private boolean derecha = false;
     final int velocidad = 7; 
     private boolean pausado = false;
-    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaW.png")).getImage();
-    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaWW.png")).getImage();
-    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaA.png")).getImage();
-    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaAA.png")).getImage();
-    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaS.png")).getImage();
-    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/NaranjaSS.png")).getImage();
-    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjad.png")).getImage();
-    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaNaranja/Naranjadd.png")).getImage();
+    private Image imagenAbiertaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaW.png")).getImage();
+    private Image imagenCerradaW = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaWW.png")).getImage();
+    private Image imagenAbiertaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaA.png")).getImage();
+    private Image imagenCerradaA = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaAA.png")).getImage();
+    private Image imagenAbiertaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaS.png")).getImage();
+    private Image imagenCerradaS = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaSS.png")).getImage();
+    private Image imagenAbiertaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaD.png")).getImage();
+    private Image imagenCerradaD = new ImageIcon(getClass().getResource("/imagenes/FantasmaRosa/rosaDD.png")).getImage();
     
     private Image imagenAbiertaWB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoW.png")).getImage();
     private Image imagenCerradaWB = new ImageIcon(getClass().getResource("/imagenes/FantasmasBorrachos/BorrachoWW.png")).getImage();
