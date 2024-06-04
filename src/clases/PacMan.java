@@ -442,6 +442,11 @@ public class PacMan extends javax.swing.JPanel {
         return Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
     }
     
+    public boolean chocaConFantasmaRosa(FantasmaRosa fantasma) {
+        // Comprueba si las posiciones de Pacman y del fantasma están dentro de un cierto rango
+        return Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25;
+    }
+    
     public boolean chocaConFantasmaNaranjaInfinito(List<FantasmaNaranja> fantasmasNaranjas) {
         for (FantasmaNaranja fantasma : fantasmasNaranjas) {
             if (fantasma != null && Math.abs(this.getPosX() - fantasma.getPosX()) < 25 && Math.abs(this.getPosY() - fantasma.getPosY()) < 25) {

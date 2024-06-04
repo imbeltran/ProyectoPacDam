@@ -116,7 +116,7 @@ public class FantasmaNaranja extends javax.swing.JPanel {
         derecha = (dx == 50);
     }
     
-   public void mover(Boolean borracho) {
+    public void mover(Boolean borracho) {
         this.borracho = borracho;
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastDirectionChangeTime >= 1000 || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {

@@ -58,9 +58,6 @@ public class FantasmaRosa extends javax.swing.JPanel {
     private boolean movedBackwards = false;
     private int origenX, origenY;
     private boolean borracho;
-    private long lastSpeedChangeTime;
-    private int speedMultiplier = 1;
-    private boolean isSpeedBoosted = false;
     
     
     
@@ -123,31 +120,19 @@ public class FantasmaRosa extends javax.swing.JPanel {
     public void mover(Boolean borracho) {
         this.borracho = borracho;
         long currentTime = System.currentTimeMillis();
-
-        // Comprueba si es hora de cambiar la velocidad
-        if (!isSpeedBoosted && currentTime - lastSpeedChangeTime >= random.nextInt(5000) + 5000) {
-            speedMultiplier = 2;  // Duplica la velocidad
-            lastSpeedChangeTime = currentTime;
-            isSpeedBoosted = true;
-        } else if (isSpeedBoosted && currentTime - lastSpeedChangeTime >= random.nextInt(5000) + 5000) {
-            speedMultiplier = 1;  // Restaura la velocidad normal
-            lastSpeedChangeTime = currentTime;
-            isSpeedBoosted = false;
-        }
-
-        if (currentTime - lastDirectionChangeTime >= 1000 / speedMultiplier || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
+        if (currentTime - lastDirectionChangeTime >= 1000 || !mapas.puedeMoverse((x + dx) / 50, (y + dy) / 50)) {
             cambiarDireccion();
             lastDirectionChangeTime = currentTime;
         }
-        x += dx * speedMultiplier;
-        y += dy * speedMultiplier;
+        x += dx;
+        y += dy;
 
         // Actualiza la posición del panel del fantasma
         this.setBounds(x, y, this.getWidth(), this.getHeight());
 
         comprobarImagen();
         repaint();
-        System.out.println("Posicion de fantasmaRosa en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
+        System.out.println("Posicion de fantasmaNaranja en el mapa es: (" + (x / 50) + ", " + (y / 50) + ")");
     }
    
     public void comprobarImagen(){

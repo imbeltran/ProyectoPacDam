@@ -3,6 +3,7 @@ package pacdam;
 import clases.FantasmaAzul;
 import clases.FantasmaNaranja;
 import clases.FantasmaRojo;
+import clases.FantasmaRosa;
 import clases.Mapa;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +36,7 @@ public class PantallaJuego extends javax.swing.JFrame {
     FantasmaNaranja panelFantasmaNaranja;
     FantasmaRojo panelFantasmaRojo;
     FantasmaAzul panelFantasmaAzul;
+    FantasmaRosa panelFantasmaRosa;
     PantallaJuego pantallaJuego;
     private Timer timer;
     private Mapa mapa;
@@ -64,8 +66,12 @@ public class PantallaJuego extends javax.swing.JFrame {
         this.pantallaJuego = pantallaJuego;
         this.setTitle(p.getMapaName());
         //this.labelNivel.setText("Nivel: "+p.getMapaName()); hay que mirar por que no va
-        datosMapa = mapa.getMapa(p.getMapaID()-1);
-        System.out.println(datosMapa);
+        datosMapa = mapa.getMapa(mapa.getIndiceMapaActual());
+        datosMapaOriginal = new int[datosMapa.length][];
+        for (int i = 0; i < datosMapa.length; i++) {
+            datosMapaOriginal[i] = datosMapa[i].clone();
+        }
+
         panelPacMan = new PacMan(datosMapa, mapa, this);
         this.add(panelPacMan);
         panelPacMan.setBounds(panelPacMan.getPosX(), panelPacMan.getPosY(), 48, 48);
@@ -81,6 +87,10 @@ public class PantallaJuego extends javax.swing.JFrame {
         panelFantasmaAzul = new FantasmaAzul(datosMapa, mapa, this);
         this.add(panelFantasmaAzul);
         panelFantasmaAzul.setBounds(panelFantasmaAzul.getPosX(), panelFantasmaAzul.getPosY(), 48, 48);
+        
+        panelFantasmaRosa = new FantasmaRosa(datosMapa, mapa, this);
+        this.add(panelFantasmaRosa);
+        panelFantasmaRosa.setBounds(panelFantasmaRosa.getPosX(), panelFantasmaRosa.getPosY(), 48, 48);
        
         
         crearMapa();          
@@ -184,14 +194,21 @@ public class PantallaJuego extends javax.swing.JFrame {
                             panelFantasmaRojo.setBounds(651, 451, 48, 48);
                             panelFantasmaRojo.setPosX(651);
                             panelFantasmaRojo.setPosY(451);
+                        } else if (panelPacMan.chocaConFantasmaRosa(panelFantasmaRosa)) {
+                            panelFantasmaRosa.setBounds(651, 451, 48, 48);
+                            panelFantasmaRosa.setPosX(651);
+                            panelFantasmaRosa.setPosY(451);
                         }   
                     } else {
                         // Si la cerveza no está activa, los fantasmas pueden "comer" a Pacman
-                        if (panelPacMan.chocaConFantasmaNaranja(panelFantasmaNaranja)||panelPacMan.chocaConFantasmaAzul(panelFantasmaAzul)||panelPacMan.chocaConFantasmaRojo(panelFantasmaRojo)) {
+                        if (panelPacMan.chocaConFantasmaNaranja(panelFantasmaNaranja)||panelPacMan.chocaConFantasmaAzul(panelFantasmaAzul)||panelPacMan.chocaConFantasmaRojo(panelFantasmaRojo)||panelPacMan.chocaConFantasmaRosa(panelFantasmaRosa)) {
                             // Pausa el juego
                             //panelPacMan.setPausado(true);
                             detenerTodosLosTimers();
                             win = false;
+                            for (int i = 0; i < datosMapa.length; i++) {
+                                datosMapa[i] = datosMapaOriginal[i].clone();
+                            }
                             // Abre la pantalla de fin de juego
                             
                             PantallaFinLose pantallaFin = new PantallaFinLose(puntuacion, win, mapa, false);
@@ -270,6 +287,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                 if (!panelPacMan.getPausado()) {
                     panelFantasmaNaranja.mover(irBorracho);
                     panelFantasmaAzul.mover(irBorracho);
+                    panelFantasmaRosa.mover(irBorracho);
                 }
             }
         });
@@ -380,16 +398,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         repaint();
     }
     
-    /*
-    public void detenerTimers() {
-        panelPacMan.detenerTimer();
-        panelFantasmaNaranja.detenerTimer();
-        panelFantasmaRojo.detenerTimer();
-        panelFantasmaAzul.detenerTimer();
-    
-    }
-    */
-    
     public void detenerTodosLosTimers() {
         if (timerMovimientoPacMan != null) {
             timerMovimientoPacMan.stop();
@@ -402,7 +410,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         }
         if (timerMovimientoFantasmaRojo != null) {
             timerMovimientoFantasmaRojo.stop();
-        }  
+        }
         if(timersFantasmas != null){
             for(Timer timer: timersFantasmas){
                 timer.stop();
@@ -451,8 +459,7 @@ public class PantallaJuego extends javax.swing.JFrame {
         pantallaFin.setVisible(true);
         //PantallaEleccion.getInstancia().setVisible(true);
     }
-
-    
+  
     public void reiniciarJuegoModoInfinito() {
         //panelPacMan.setPausado(true);     
         detenerTodosLosTimers();
@@ -465,10 +472,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         nuevaPartida.setVisible(true);
         this.dispose();
     }
-
-
-
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
