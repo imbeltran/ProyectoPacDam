@@ -170,7 +170,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                         irBorracho = true;
                         panelPacMan.mover(irBorracho);
                         // Inicia un temporizador para desactivar la cerveza después de 5 segundos
-                        new Timer(5000, new ActionListener() {
+                        new Timer(7000, new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 irBorracho = false;
@@ -235,7 +235,7 @@ public class PantallaJuego extends javax.swing.JFrame {
                         irBorracho = true;
 
                         // Inicia un temporizador para desactivar la cerveza después de 5 segundos
-                        new Timer(5000, new ActionListener() {
+                        new Timer(7000, new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
                                 irBorracho = false;
@@ -277,8 +277,6 @@ public class PantallaJuego extends javax.swing.JFrame {
         });
         timerMovimientoPacManInfinito.start();
     }
-
-
 
     public void movimientoFantasmas(){
         timerMovimientoFantasmas = new Timer(300, new ActionListener() {
